@@ -1,1 +1,25 @@
 
+Billionaires Boys Club
+Robin Han
+Bill Ni
+Sajed Nahian
+pd 7
+---------------------
+Connectify
+	This team wishes to create a website that allows students and recent graduates to look for jobs and pair with companies that are looking to hire. By swiping left and right, the job seekers and companies can match if they both are interested in one another, allowing them to connect through chat.
+
+ ______   ______   __   __   __       ______   _______
+/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
+\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__
+ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\
+  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/
+   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \
+    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/
+==============================================================
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+robinH -- 2019-05-07 13:02
+--------------------------------------------------------------
+Added devlog to repo.
+==============================================================
