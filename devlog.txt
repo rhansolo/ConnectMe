@@ -4,7 +4,7 @@ Bill Ni
 Sajed Nahian
 pd 7
 ---------------------
-Connectify
+ConnectMe
 	This team wishes to create a website that allows students and recent
 graduates to look for jobs and pair with companies that are looking to hire.
 By swiping left and right, the job seekers and companies can match if they both
