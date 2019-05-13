@@ -39,4 +39,5 @@ Included updated design doc to repo.
 Changes made:
 	- added more detail into project description after discussing more in depth about our project
 	- fixed small databaseSchema variable type mistake
+	- included timeline which all team members agreed on.
 ==============================================================
