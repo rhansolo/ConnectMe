@@ -41,3 +41,8 @@ Changes made:
 	- fixed small databaseSchema variable type mistake
 	- included timeline which all team members agreed on.
 ==============================================================
+billN -- 2019-05-13 13:18
+--------------------------------------------------------------
+Added user forms.
+NOTE: FORMS NOT LINKED TO FLASK PAGES YET
+==============================================================
