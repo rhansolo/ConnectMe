@@ -48,13 +48,20 @@ def loginuser(user, password):
 
     return len(creds) > 0
 
-def newuser(user, password):
+def newuser(name, user, password):
     db = initdb()
     c = db.cursor()
 
-    c.execute("INSERT INTO users VALUES(?,?)", (user, password))
+    c.execute("SELECT * FROM users")
+    usrs = c.fetchall()
+    if len(usrs) == 0:
+        c.execute("INSERT INTO users VALUES(?,?)", (0, name, user, password, "", "", "", "", ""))
+    else:
+        c.execute("INSERT INTO users VALUES(?,?)", (len(usrs), name, user, password, "", "", "", "", ""))
 
     db.commit()
     db.close()
 
     return True
+
+# def fillqs():

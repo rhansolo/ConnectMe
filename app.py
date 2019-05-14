@@ -28,11 +28,17 @@ def login():
     	return redirect(url_for('root'))
     return render_template('login.html',logged_in = False)
 '''
-@app.route('/register')
+@app.route('/register', methods=["POST"])
 def register():
     if user in session:
         return redirect(url_for('root'))
-    return render_template('register.html', logged_in=False)
+    return render_template('createprofile.html', logged_in=False)
+
+@app.route('/questions', methods=["POST"])
+def questions():
+    if user in session:
+        return redirect(url_for('root'))
+    return render_template('questions.html', logged_in=False)
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
