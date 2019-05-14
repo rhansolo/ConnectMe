@@ -2,11 +2,6 @@ import sqlite3
 
 dbfile = "data/userdata.db"
 
-db = sqlite3.connect(dbfile)
-c = db.cursor()
-txt = """CREATE TABLE users()"""
-c.execute(txt)
-
 def initdb():
     db = sqlite3.connect(dbfile)
     return db
