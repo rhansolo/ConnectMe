@@ -1,7 +1,7 @@
 import os
 import random
 
-from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages
+from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory
 from util import database
 
 app = Flask(__name__)
@@ -81,6 +81,11 @@ def authenticate():
             flash('Username already taken!')
         # Try to register again
         return render_template('register.html', username = "", errors = True)
+
+@app.route('/file/<path:path>')
+def send_js(path):
+    print(path)
+    return send_from_directory('static', path)
 
 
 if __name__ == '__main__':
