@@ -28,7 +28,7 @@ def login():
     	return redirect(url_for('root'))
     return render_template('login.html',logged_in = False)
 '''
-@app.route('/register', methods=["POST"])
+@app.route('/register', methods=["POST", "GET"])
 def register():
     if user in session:
         return redirect(url_for('root'))
@@ -38,7 +38,16 @@ def register():
 def questions():
     if user in session:
         return redirect(url_for('root'))
+    database.newuser(request.form["name"], request.form["email"], request.form["pswd"])
+    setUser(request.form["email"])
     return render_template('questions.html', logged_in=False)
+
+@app.route('/finalizeprofile', methods=["POST"])
+def finalizeprofile():
+    if user in session:
+        return redirect(url_for('root'))
+    database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
+    return redirect(url_for('root'))
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():

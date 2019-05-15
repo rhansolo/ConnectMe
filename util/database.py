@@ -10,7 +10,7 @@ def checkuser(user):
     db = initdb()
     c = db.cursor()
 
-    c.execute("SELECT * FROM users WHERE name = ?", (user, ))
+    c.execute("SELECT * FROM users WHERE username = ?", (user, ))
     dupusers = c.fetchall()
 
     db.close()
@@ -21,7 +21,7 @@ def getpassword(user):
     db = initdb()
     c = db.cursor()
 
-    c.execute("SELECT password FROM users WHERE name = ?", (user, ))
+    c.execute("SELECT password FROM users WHERE username = ?", (user, ))
     password = c.fetchone()[0]
 
     db.close()
@@ -32,7 +32,7 @@ def resetpassword(user, newpass):
     db = initdb()
     c = db.cursor()
 
-    c.execute("UPDATE users SET password = ? WHERE name = ?", (newpass, user))
+    c.execute("UPDATE users SET password = ? WHERE username = ?", (newpass, user))
 
     db.commit()
     db.close()
@@ -41,7 +41,7 @@ def loginuser(user, password):
     db = initdb()
     c = db.cursor()
 
-    c.execute("SELECT * FROM users WHERE name = ? AND password = ?", (user, password))
+    c.execute("SELECT * FROM users WHERE username = ? AND password = ?", (user, password))
     creds = c.fetchall()
 
     db.close()
@@ -55,13 +55,22 @@ def newuser(name, user, password):
     c.execute("SELECT * FROM users")
     usrs = c.fetchall()
     if len(usrs) == 0:
-        c.execute("INSERT INTO users VALUES(?,?)", (0, name, user, password, "", "", "", "", ""))
+        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (0, name, user, password, "", "", "", ""))
     else:
-        c.execute("INSERT INTO users VALUES(?,?)", (len(usrs), name, user, password, "", "", "", "", ""))
+        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (len(usrs), name, user, password, "", "", "", ""))
 
     db.commit()
     db.close()
 
     return True
 
-# def fillqs():
+def fillqs(email, bio, pos, maj, intrsts):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("UPDATE users SET bio = ?, position = ?, interests = ?, major = ? WHERE username = ?", (bio, pos, intrsts, maj, email))
+
+    db.commit()
+    db.close()
+
+    return True
