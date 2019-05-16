@@ -1,14 +1,10 @@
 import os
 import random
-from random import randint
-import time
 
-from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
+from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory
 from util import database
 
 app = Flask(__name__)
-DIR = "/var/www/ConnectMe/ConnectMe/"
-
 app.secret_key = os.urandom(32)
 user = None
 
@@ -91,14 +87,6 @@ def send_js(path):
     print(path)
     return send_from_directory('static', path)
 
-@app.route("/api/getNextProfile")
-def summary():
-    profile = {
-        "name": "Donald Trumpppyy " + str(randint(0, 9))
-    }
-    time.sleep(1)
-    return jsonify(profile)
-# send it back as json
 
 if __name__ == '__main__':
     app.debug = True
