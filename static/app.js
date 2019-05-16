@@ -127,8 +127,8 @@ function createButtonListener(love) {
       console.error(card.innerHTML)
       card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
     }
-
-    initCards();
+	getNextProfile()
+    //initCards();
 
     event.preventDefault();
   };
@@ -139,11 +139,20 @@ var loveListener = createButtonListener(true);
 
 
 function getNextProfile () {
-
-document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
+document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class="spinner" id="spinner"></div>`)
+  fetch('./api/getNextProfile')
+  .then(function(response) {
+    console.log('hello')
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(JSON.stringify(myJson));
+    var spinner = document.getElementById('spinner');
+    spinner.remove()
+    document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
    <div class="tinder--card">
       <img src="./file/trump.jpg">
-      <h3 class="name">Donald J Trump</h3>
+      <h3 class="name">${myJson.name}</h3>
       <p>Student at University of Pennsylvania</p>
       <p>Looking for: Mentor</p>
       <br>
@@ -165,6 +174,7 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
     </div>`)
    allCards = document.querySelectorAll('.tinder--card');
    initListeners()
+});
 }
 
 
