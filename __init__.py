@@ -7,7 +7,7 @@ from util import database
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 user = None
-
+# test 
 def setUser(userName):
     '''
     Sets username to be passed to html files.
