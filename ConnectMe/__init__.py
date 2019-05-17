@@ -4,7 +4,98 @@ from random import randint
 import time
 
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
-from util import database
+# from util import database
+# ---------------------------------------------------------
+
+import sqlite3
+
+dbfile = "data/userdata.db"
+
+def initdb():
+    db = sqlite3.connect(dbfile)
+    return db
+
+def checkuser(user):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users WHERE username = ?", (user, ))
+    dupusers = c.fetchall()
+
+    db.close()
+
+    return len(dupusers) > 0
+
+def getpassword(user):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT password FROM users WHERE username = ?", (user, ))
+    password = c.fetchone()[0]
+
+    db.close()
+
+    return password
+
+def resetpassword(user, newpass):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("UPDATE users SET password = ? WHERE username = ?", (newpass, user))
+
+    db.commit()
+    db.close()
+
+def loginuser(user, password):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users WHERE username = ? AND password = ?", (user, password))
+    creds = c.fetchall()
+
+    db.close()
+
+    return len(creds) > 0
+
+def newuser(name, user, password):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users")
+    usrs = c.fetchall()
+    if len(usrs) == 0:
+        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (0, name, user, password, "", "", "", ""))
+    else:
+        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (len(usrs), name, user, password, "", "", "", ""))
+
+    db.commit()
+    db.close()
+
+    return True
+
+def fillqs(email, bio, pos, maj, intrsts):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("UPDATE users SET bio = ?, position = ?, interests = ?, major = ? WHERE username = ?", (bio, pos, intrsts, maj, email))
+
+    db.commit()
+    db.close()
+
+    return True
+
+def fetchrand():
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users ORDER BY RANDOM() LIMIT 1;")
+
+    pf = c.fetchone()
+
+    db.close()
+    return pf
+
+# ---------------------------------------------------------
 
 app = Flask(__name__)
 DIR = os.path.dirname(__file__)
@@ -24,7 +115,7 @@ def setUser(userName):
 @app.route("/")
 def root():
     if user in session:
-        print(database.fetchrand())
+        print(fetchrand())
         return render_template('swipe.html', logged_in = True)
     return render_template('index.html', logged_in = False)
 '''
@@ -44,7 +135,8 @@ def register():
 def questions():
     if user in session:
         return redirect(url_for('root'))
-    database.newuser(request.form["name"], request.form["email"], request.form["pswd"])
+    
+    newuser(request.form["name"], request.form["email"], request.form["pswd"])
     setUser(request.form["email"])
     return render_template('questions.html', logged_in=False)
 
@@ -52,7 +144,8 @@ def questions():
 def finalizeprofile():
     if user in session:
         return redirect(url_for('root'))
-    database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
+    
+    fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
     return redirect(url_for('root'))
 
 @app.route('/authenticate', methods=['POST'])
@@ -66,17 +159,19 @@ def authenticate():
     username, password, curr_page = request.form['username'], request.form['password'], request.form['address']
     # LOGGING IN
     if request.form["submit"] == "Login":
-        if username != "" and password != "" and database.loginuser(username, password):
+        if username != "" and password != "" and loginuser(username, password):
+            session['user'] = username
             session[username] = password
             setUser(username)
             return redirect(curr_page)
         return render_template("index.html", username = "", errors = True, alerts=["Incorrect Credentials"], logged_in = False)
     # REGISTERING
     else:
-        if len(username.strip()) != 0 and not database.checkuser(username):
+        if len(username.strip()) != 0 and not checkuser(username):
             if len(password.strip()) != 0:
                 # add account to DB
-                database.newuser(username, password)
+                
+                newuser(username, password)
                 flash('Successfully registered account for user  "{}"'.format(username))
                 return redirect(url_for('home'))
             else:
@@ -95,13 +190,46 @@ def send_js(path):
 
 @app.route("/api/getNextProfile")
 def summary():
+    randomProfile = fetchrand()
     profile = {
-        "name": "Donald Trumpppyy " + str(randint(0, 9))
+        "name": randomProfile[1],
+        "description": randomProfile[4],
+        "status": randomProfile[5],
+        "lookingFor": 'Mentor',
+        "skills": ['python', 'python', 'python'],
+        "interests": ['python', 'python', 'python'],
+        "socials": {
+            "facebook": 'https://google.com',
+            "linkedin": 'https://google.com',
+            "twitter": 'https://google.com',
+        }
     }
-    time.sleep(1)
+    print(user in session)
     return jsonify(profile)
 # send it back as json
+messagesArr = []
+users = {}
+@app.route("/messages")
+def messages():
+     if 'user' in session:
+        cryptoNum = random.randint(1,100000)
+        users[cryptoNum] = session['user']
+        print(users)
+        return render_template('message.html', num=cryptoNum)
 
+@app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
+def message(num, message, time):
+    messagesArr.append({
+        'num': num,
+        'message': message,
+        'time': time
+    })
+    print(messagesArr)
+    return jsonify({'message': 'success'})
+
+@app.route('/api/getMessages', methods=['GET'])
+def getMesages():
+    return jsonify(messagesArr)
 if __name__ == '__main__':
     app.debug = True
     app.run()

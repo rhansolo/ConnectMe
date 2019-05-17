@@ -149,15 +149,17 @@ body {
 }
 
 .left {
+  pointer-events: none;
   text-align: left;
   width: 30%;
-  margin-left: 10%;
+  margin-left: 20%;
   float: left;
 }
 
 .right {
+  pointer-events: none;
   text-align: left;
-  width: 60%;
+  width: 50%;
   float: left;
 }
 
@@ -173,7 +175,7 @@ body {
   margin-bottom: 10px;
 }
 
-a {
+.tinder a {
   font-size: 25px;
   color: #9cc5e2;
   margin: 0 30px;
@@ -186,6 +188,12 @@ a {
   margin-top: 20%;
 }
 
+.description {    pointer-events: none;
+  margin-top: 10%;
+width: 70%;
+text-align: center;
+margin: 0 auto;
+}
 
 .spinner {
    position: absolute;
@@ -205,6 +213,11 @@ a {
    border-top:6px solid rgba(0,174,239,.8);
    border-radius:100%;
 }
+
+.nav {
+  pointer-events: all;
+}
+
 
 @-webkit-keyframes rotation {
    from {-webkit-transform: rotate(0deg);}

@@ -4,34 +4,32 @@ var tinderContainer = document.querySelector('.tinder');
 var allCards = document.querySelectorAll('.tinder--card');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
-var i = 1;
-var count = 1;
 
-for (let i = 0; i < count; i++) {
-  document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
-   <div class="tinder--card">
-      <img src="./file/trump.jpg">
-      <h3 class="name">Donald J Trump</h3>
-      <p>Student at University of Pennsylvania</p>
-      <p>Looking for: Mentor</p>
-      <br>
-      <div class="left info">
-        <p><strong>Skills</strong></p>
-        <p>-Python</p>
-        <p>-Java</p>
-      </div>
-      <div class="right info">
-        <p><strong>Interested In</strong></p>
-        <p>-Internships</p>
-        <p>-Learning opportunities</p>
-      </div>
-      <div class="socials">
-        <a href="https://google.com"><i class="fa fa-linkedin"></i></a>
-        <a href="https://google.com"><i class="fa fa-facebook"></i></a>
-        <a href="https://google.com"><i class="fa fa-twitter"></i></a>
-      </div>
-    </div>`)
-}
+// for (let i = 0; i < count; i++) {
+//   document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
+//    <div class="tinder--card">
+//       <img src="./file/trump.jpg">
+//       <h3 class="name">Donald J Trump</h3>
+//       <p>Student at University of Pennsylvania</p>
+//       <p>Looking for: Mentor</p>
+//       <br>
+//       <div class="left info">
+//         <p><strong>Skills</strong></p>
+//         <p>-Python</p>
+//         <p>-Java</p>
+//       </div>
+//       <div class="right info">
+//         <p><strong>Interested In</strong></p>
+//         <p>-Internships</p>
+//         <p>-Learning opportunities</p>
+//       </div>
+//       <div class="socials">
+//         <a href="https://google.com"><i class="fa fa-linkedin"></i></a>
+//         <a href="https://google.com"><i class="fa fa-facebook"></i></a>
+//         <a href="https://google.com"><i class="fa fa-twitter"></i></a>
+//       </div>
+//     </div>`)
+// }
 
 
 var initListeners = () => allCards.forEach(function (el) {
@@ -86,7 +84,7 @@ var initListeners = () => allCards.forEach(function (el) {
       }
 	getNextProfile()
       event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
-      initCards();
+
     }
   });
 });
@@ -104,10 +102,10 @@ function initCards(card, index) {
   tinderContainer.classList.add('loaded');
 }
 
-initCards();
+// initCards();
 
 
-initListeners();
+// initListeners();
 
 function createButtonListener(love) {
   return function (event) {
@@ -127,7 +125,7 @@ function createButtonListener(love) {
       console.error(card.innerHTML)
       card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
     }
-	getNextProfile()
+	   getNextProfile()
     //initCards();
 
     event.preventDefault();
@@ -153,30 +151,56 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
    <div class="tinder--card">
       <img src="./file/trump.jpg">
       <h3 class="name">${myJson.name}</h3>
-      <p>Student at University of Pennsylvania</p>
-      <p>Looking for: Mentor</p>
+      <p>${myJson.status}</p>
+      <p>Looking for: ${myJson.lookingFor}</p>
       <br>
       <div class="left info">
         <p><strong>Skills</strong></p>
-        <p>-Python</p>
-        <p>-Java</p>
+        ${generatePList(myJson.skills)}
       </div>
       <div class="right info">
         <p><strong>Interested In</strong></p>
-        <p>-Internships</p>
-        <p>-Learning opportunities</p>
+        ${generatePList(myJson.interests)}
+      </div>
+      <div class="description">
+        <p>${myJson.description}</p>
       </div>
       <div class="socials">
-        <a href="https://google.com"><i class="fa fa-linkedin"></i></a>
-        <a href="https://google.com"><i class="fa fa-facebook"></i></a>
-        <a href="https://google.com"><i class="fa fa-twitter"></i></a>
+        ${generateSocials(myJson.socials)}
       </div>
     </div>`)
    allCards = document.querySelectorAll('.tinder--card');
    initListeners()
+  initCards();
 });
 }
 
+function generatePList (arr) {
+  let html = ''
+  arr.forEach(el => {
+    html += `<p>-${el}</p>`
+  })
+  return html
+}
 
+function generateSocials (socials) {
+  let html = ''
+  if (socials.facebook) {
+    html += `<a href="${socials.facebook}"><i class="fa fa-facebook"></i></a>`
+  }
+   if (socials.linkedin) {
+    html += `<a href="${socials.facebook}"><i class="fa fa-linkedin"></i></a>`
+  }
+   if (socials.twitter) {
+    html += `<a href="${socials.facebook}"><i class="fa fa-twitter"></i></a>`
+  }
+  return html
+}
+
+document.getElementById('message').addEventListener('click', () => {
+  window.location.href = "./messages";
+})
+
+getNextProfile()
 nope.addEventListener('click', nopeListener);
 love.addEventListener('click', loveListener);

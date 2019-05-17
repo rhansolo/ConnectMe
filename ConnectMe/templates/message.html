@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="./file/messageStyle.css">
+	</head>
+	<body>
+	<div id="messages">
+			<p hidden id="num">{{ num }}</p>
+
+
+            </div>
+		<div class="container">
+			<input id="messageBox" type="text"/>
+			<button type="submit" id="sendButton">Send</button>
+		</div>
+         
+	<script>
+		const sendButton = document.getElementById('sendButton')
+		const num = document.getElementById('num').innerHTML
+		console.log(num)
+		const messagesDiv = document.getElementById('messages')
+		const messageInput = document.getElementById('messageBox')
+		const now = new Date()
+		let length = 0;
+		const update = () => {
+			fetch('./api/getMessages')
+		  .then(function(response) {
+		    return response.json();
+		  })
+		  .then(function(myJson) {
+		  	if (myJson.length > length) {
+		  		console.log(myJson)
+		  		console.log(num)
+		  		messagesDiv.innerHTML += friendMessage(myJson[myJson.length - 1].message)
+		  		length++
+		  	}
+		  });
+		  setTimeout(update, 1000);
+		}
+		fetch('./api/getMessages')
+		  .then(function(response) {
+		    return response.json();
+		  })
+		  .then(function(myJson) {
+		  	if (myJson.length > length)
+		    myJson.forEach(message => {
+		    	length++;
+		    	if (message.num != num) {
+		    		messagesDiv.innerHTML += friendMessage(message.message)
+		    	}
+		    })
+		 });
+		update()
+
+		sendButton.addEventListener('click', () => {
+			messagesDiv.innerHTML += createMessageHTML(messageInput.value, dateToString(now))
+			length++;
+			fetch(`./api/message/${num}/${messageInput.value}/${dateToString(now)}`)
+			console.log({
+				message: messageInput.value,
+				num: num,
+				date: dateToString(now)
+			})
+			messageInput.value = ""
+		})
+
+		const createMessageHTML = (message, date) => {
+			console.log(date)
+			return `
+			<div class="container darker">
+				  <img src="https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/05/12/104466932-PE_Color.240x240.jpg?v=1494613853" alt="Avatar" class="right">
+				  <p>${message}</p>
+				  <span class="time-left">${date}</span>
+				</div>
+		`
+		}
+
+		const friendMessage = (message) => {
+			return `<div class="container">
+		  <img src="https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/05/12/104466932-PE_Color.240x240.jpg?v=1494613853" alt="Avatar">
+		  <p>${message}</p>
+		  <span class="time-right">11:02</span>
+		</div>`
+		}
+
+		const dateToString = (date) => {
+			const hours = date.getHours()
+			return `${hours > 12 ? hours - 12 : hours}:${date.getMinutes()} ${hours > 12 ? 'PM' : 'AM'}`
+		}
+	</script>       
+	</body>
+	
+</html>
