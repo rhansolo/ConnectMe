@@ -18,6 +18,10 @@ h2 {
 	color: #79b791 !important;
 }
 
+h4 {
+	color: #79b791 !important;
+}
+
 .navbar-brand{	
 	color: #79b791 !important;
 }
@@ -25,7 +29,7 @@ h2 {
 .btn{
 	color: #79b791 !important;
 	border-color: #79b791 !important;
-	background-color: #222222 !important;
+	background-color: transparent !important;
 }
 
 footer {
