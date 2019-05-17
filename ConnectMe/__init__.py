@@ -24,7 +24,8 @@ def setUser(userName):
 @app.route("/")
 def root():
     if user in session:
-    	return render_template('swipe.html', logged_in = True)
+        print(database.fetchrand())
+        return render_template('swipe.html', logged_in = True)
     return render_template('index.html', logged_in = False)
 '''
 @app.route("/login", methods=["POST"])
@@ -60,7 +61,7 @@ def authenticate():
     Checks user and pass. Makes login and register work. Checks session.
     '''
     if user in session:
-        return redirect(url_for('home'))
+        return redirect(url_for('root'))
     # instantiates DB_Manager with path to DB_FILE
     username, password, curr_page = request.form['username'], request.form['password'], request.form['address']
     # LOGGING IN

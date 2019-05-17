@@ -74,3 +74,14 @@ def fillqs(email, bio, pos, maj, intrsts):
     db.close()
 
     return True
+
+def fetchrand():
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users ORDER BY RANDOM() LIMIT 1;")
+
+    pf = c.fetchone()
+
+    db.close()
+    return pf
