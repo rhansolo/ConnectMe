@@ -7,7 +7,8 @@ from flask import Flask, redirect, url_for, render_template, session, request, f
 from util import database
 
 app = Flask(__name__)
-DIR = "/var/www/ConnectMe/ConnectMe/"
+DIR = os.path.dirname(__file__)
+DIR += '/'
 
 app.secret_key = os.urandom(32)
 user = None
