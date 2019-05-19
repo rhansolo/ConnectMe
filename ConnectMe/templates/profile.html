@@ -1,0 +1,84 @@
+{% extends "templateLog.html" %}
+{% block content %}
+	<div class = "container" style="position: absolute; left: 10%; top: 20%;width: 75%;">
+		<div class="row">
+	    <div class="col-md-4">
+				<h2 class="pb-2"><b>Profile</b></h2>
+				<form method="POST" action="/editprofile" id="prof">
+				  <div class="row pb-2">
+				    <div class="col">
+				      <input class="form-control mr-sm-2" type="text" name="name" placeholder = "Name" value="{{deets[1]}}" required>
+				    </div>
+				  </div>
+				  <div class="row pb-2">
+				    <div class="col">
+				      <input class="form-control mr-sm-2" type="text" name="email" placeholder = "Email" value="{{deets[2]}}" required>
+				    </div>
+				  </div>
+				  <div class="row pb-2">
+	          <div class="col">
+	            <input class="form-control mr-sm-2" name="pos" type="text" placeholder="Position" value="{{deets[5]}}" required>
+	          </div>
+	        </div>
+	        <div class="row pb-2">
+	          <div class="col">
+	            <select class="form-control" name="major" required>
+	              <option {% if deets[7] == 'cs' %}selected{% endif %} value="cs">Computer Science</option>
+	              <option {% if deets[7] == 'bio' %}selected{% endif %} value="bio">Biology</option>
+	              <option {% if deets[7] == 'phy' %}selected{% endif %} value="phy">Physics</option>
+	              <option {% if deets[7] == 'chem' %}selected{% endif %} value="chem">Chemistry</option>
+	              <option {% if deets[7] == 'eng' %}selected{% endif %} value="eng">Engineering</option>
+	              <option {% if deets[7] == 'arch' %}selected{% endif %} value="arch">Architecture</option>
+	              <option {% if deets[7] == 'lang' %}selected{% endif %} value="lang">Language Arts</option>
+	              <option {% if deets[7] == 'art' %}selected{% endif %} value="art">Arts</option>
+	              <option {% if deets[7] == 'hist' %}selected{% endif %} value="hist">History</option>
+	              <option {% if deets[7] == 'ed' %}selected{% endif %} value="ed">Education</option>
+	            </select>
+	          </div>
+	        </div>
+	        <div class="row pb-2">
+	          <div class="col">
+	            <select class="form-control" name="interests" required>
+	              <option {% if deets[6] == 'cs' %}selected{% endif %} value="cs">Computer Science</option>
+	              <option {% if deets[6] == 'bio' %}selected{% endif %} value="bio">Biology</option>
+	              <option {% if deets[6] == 'phy' %}selected{% endif %} value="phy">Physics</option>
+	              <option {% if deets[6] == 'chem' %}selected{% endif %} value="chem">Chemistry</option>
+	              <option {% if deets[6] == 'eng' %}selected{% endif %} value="eng">Engineering</option>
+	              <option {% if deets[6] == 'arch' %}selected{% endif %} value="arch">Architecture</option>
+	              <option {% if deets[6] == 'lang' %}selected{% endif %} value="lang">Language Arts</option>
+	              <option {% if deets[6] == 'art' %}selected{% endif %} value="art">Arts</option>
+	              <option {% if deets[6] == 'hist' %}selected{% endif %} value="hist">History</option>
+	              <option {% if deets[6] == 'ed' %}selected{% endif %} value="ed">Education</option>
+	            </select>
+	          </div>
+	        </div>
+	        <div class="row pb-4">
+	          <div class="col">
+	            <textarea class="form-control" name="bio" form="prof" rows="4" cols="50" form="prof" required>{{ deets[4] }}</textarea>
+	          </div>
+	        </div>
+				  <input class="btn btn-warning text-dark shadow mb-5" type="submit" name="submit" value="I'm done!">
+				</form>
+			</div>
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-4">
+				<div class="row">
+					<h2 class="pb-2"><b>Change Password</b></h2>
+				</div>
+				<form method="POST" action="/changepass">
+					<div class="row pb-2">
+          	<input class="form-control col-12 mr-sm-2" name="opswd" type="password" placeholder = "Old Password" required>
+          </div>
+					<div class="row pb-2">
+          	<input class="form-control col-12 mr-sm-2" name="pswd" type="password" placeholder = "Password" required>
+          </div>
+          <div class="row pb-4">
+          	<input class="form-control col-12 mr-sm-2" name="cpswd" type="password" placeholder = "Confirm Password" required>
+          </div>
+				  <input class="btn btn-warning text-dark shadow mb-5" style="margin-left: -15px" type="submit" name="submit" value="Finished!">
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

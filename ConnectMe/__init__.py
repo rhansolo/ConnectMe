@@ -84,16 +84,38 @@ def fillqs(email, bio, pos, maj, intrsts):
 
     return True
 
-def fetchrand():
+def fetchrand(user):
     db = initdb()
     c = db.cursor()
 
-    c.execute("SELECT * FROM users ORDER BY RANDOM() LIMIT 1;")
+    c.execute("SELECT * FROM users  WHERE username != ? ORDER BY RANDOM() LIMIT 1;", (user, ))
 
     pf = c.fetchone()
 
     db.close()
     return pf
+
+def getuser(user):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users WHERE username = ?;", (user, ))
+
+    pf = c.fetchone()
+
+    db.close()
+    return pf
+
+def edituser(name, user, pos, maj, intrsts, bio, olduser):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("UPDATE users SET name = ?, username = ?, bio = ?, position = ?, interests = ?, major = ? WHERE username = ?", (name, user, bio, pos, intrsts, maj, user))
+
+    db.commit()
+    db.close()
+
+    return True
 
 # ---------------------------------------------------------
 
@@ -115,8 +137,8 @@ def setUser(userName):
 @app.route("/")
 def root():
     if user in session:
-        print(fetchrand())
-        return render_template('swipe.html', crtprof = False, logged_in = True)
+        print(fetchrand(user))
+        return render_template('swipe.html', crtprof = False, logged_in = True, username = user)
     return render_template('index.html', crtprof = False, logged_in = False)
 '''
 @app.route("/login", methods=["POST"])
@@ -193,7 +215,7 @@ def send_js(path):
 
 @app.route("/api/getNextProfile")
 def summary():
-    randomProfile = fetchrand()
+    randomProfile = fetchrand(user)
     profile = {
         "name": randomProfile[1],
         "description": randomProfile[4],
@@ -214,7 +236,7 @@ messagesArr = []
 users = {}
 @app.route("/messages")
 def messages():
-     if 'user' in session:
+    if 'user' in session:
         cryptoNum = random.randint(1,100000)
         users[cryptoNum] = session['user']
         print(users)
@@ -230,13 +252,34 @@ def message(num, message, time):
     print(messagesArr)
     return jsonify({'message': 'success'})
 
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if user in session:
+        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=getuser(user))
+    return redirect(url_for('root'))
+
+@app.route('/editprofile', methods=['POST'])
+def editprof():
+    if user in session:
+        edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], request.form["interests"], request.form["bio"], user)
+        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=getuser(user))
+    return redirect(url_for('root'))
+
+@app.route('/changepass', methods=['POST'])
+def changepass():
+    if user in session:
+        if request.form['opswd'] == getpassword(user):
+            resetpassword(user, request.form['pswd'])
+        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=getuser(user))
+    return redirect(url_for('root'))
+
 @app.route('/api/getMessages', methods=['GET'])
 def getMesages():
     return jsonify(messagesArr)
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
-
 
 '''
 @app.route("/profile")

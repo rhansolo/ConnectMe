@@ -85,3 +85,14 @@ def fetchrand():
 
     db.close()
     return pf
+
+def getuser(username):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users WHERE username = ?", (username, ))
+
+    pf = c.fetchone()
+
+    db.close()
+    return pf
