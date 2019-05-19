@@ -116,8 +116,8 @@ def setUser(userName):
 def root():
     if user in session:
         print(fetchrand())
-        return render_template('swipe.html', logged_in = True)
-    return render_template('index.html', logged_in = False)
+        return render_template('swipe.html', crtprof = False, logged_in = True)
+    return render_template('index.html', crtprof = False, logged_in = False)
 '''
 @app.route("/login", methods=["POST"])
 def login():
@@ -129,22 +129,20 @@ def login():
 def register():
     if user in session:
         return redirect(url_for('root'))
-    return render_template('createprofile.html', logged_in=False)
+    return render_template('createprofile.html', crtprof = True, logged_in=False)
 
 @app.route('/questions', methods=["POST"])
 def questions():
     if user in session:
         return redirect(url_for('root'))
-    
     newuser(request.form["name"], request.form["email"], request.form["pswd"])
     setUser(request.form["email"])
-    return render_template('questions.html', logged_in=False)
+    return render_template('questions.html', crtprof = True, logged_in=False)
 
 @app.route('/finalizeprofile', methods=["POST"])
 def finalizeprofile():
     if user in session:
         return redirect(url_for('root'))
-    
     fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
     return redirect(url_for('root'))
 
@@ -181,7 +179,12 @@ def authenticate():
         else:
             flash('Username already taken!')
         # Try to register again
-        return render_template('register.html', username = "", errors = True)
+        return render_template('register.html', crtprof = True, username = "", errors = True)
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.pop(user)
+    return redirect(url_for("root"))
 
 @app.route('/file/<path:path>')
 def send_js(path):

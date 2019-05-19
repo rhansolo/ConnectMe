@@ -47,7 +47,6 @@ body {
 }
 
 .tinder_love .fa-heart {
-  opacity: 0.7;
   -webkit-transform: scale(1);
           transform: scale(1);
 }
@@ -137,7 +136,7 @@ body {
 }
 
 .fa-heart {
-  color: #FFACE4;
+  color: #E71D36 !important;
 }
 
 .fa-remove {

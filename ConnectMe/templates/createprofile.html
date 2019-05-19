@@ -2,31 +2,33 @@
 {% block title %} Register - ConnectMe {% endblock %}
 
 {% block content %}
-<html>
-  <head>
-  </head>
-  <body>
-    <div>
-      <h1>
-        Create Profile
-      </h1>
+    <div class = "container" style="position: absolute; left: 10%; top: 20%;width: 75%;">
+      <div class="col-md-4">
+        <h2 class="pb-2"><b>Create Profile</b></h2>
+
+        <form method="POST" action="/questions">
+          <div class="row pb-2">
+            <div class="col">
+              <input class="form-control mr-sm-2" type="text" name="name" placeholder = "Name" required>
+            </div>
+          </div>
+          <div class="row pb-2">
+            <div class="col">
+              <input class="form-control mr-sm-2" type="text" name="email" placeholder = "Email" required>
+            </div>
+          </div>
+          <div class="row pb-2">
+            <div class="col">
+              <input class="form-control mr-sm-2" name="pswd" type="password" placeholder = "Password" required>
+            </div>
+          </div>
+          <div class="row pb-4">
+            <div class="col">
+              <input class="form-control mr-sm-2" name="cpswd" type="password" placeholder = "Confirm Password" required>
+            </div>
+          </div>
+          <input class="btn btn-warning text-dark shadow mb-5" type="submit" name="submit" value="I'm ready...">
+        </form>
+      </div>
     </div>
-
-    <form method="POST" action="/questions">
-      <h4>Name</h4>
-      <input name="name" type="text"><br>
-
-      <h4>Email</h4>
-      <input name="email" type="text"><br>
-
-      <h4>Password</h4>
-      <input name="pswd" type="password"><br>
-
-      <h4>Confirm Password</h4>
-      <input name="cpswd" type="password"><br><br>
-
-      <input type="Submit" value="I'm ready...">
-    </form>
-  </body>
-</html>
 {% endblock %}

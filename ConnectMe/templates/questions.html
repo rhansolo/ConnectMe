@@ -1,51 +1,61 @@
-<html>
-  <head>
-  </head>
-  <body>
-    <div>
-      <h1>
-        Questions
-      </h1>
+{% extends "templateLog.html" %}
+
+{% block title %}
+Questions - ConnectMe
+{% endblock %}
+
+{% block content %}
+    <div class = "container" style="position: absolute; left: 10%; top: 20%;width: 75%;">
+      <div class="col-md-4">
+        <h2 class="pb-2"><b>Questions</b></h2>
+
+        <form method="POST" action="/finalizeprofile" id="profinfo">
+          <div class="row pb-2">
+            <div class="col">
+              <input class="form-control mr-sm-2" name="pos" type="text" placeholder="Position" required>
+            </div>
+          </div>
+          <div class="row pb-2">
+            <div class="col">
+              <select class="form-control" name="major" required>
+                <option disabled selected value style="display:none">Major</option>
+                <option value="cs">Computer Science</option>
+                <option value="bio">Biology</option>
+                <option value="phy">Physics</option>
+                <option value="chem">Chemistry</option>
+                <option value="eng">Engineering</option>
+                <option value="arch">Architecture</option>
+                <option value="lang">Language Arts</option>
+                <option value="art">Arts</option>
+                <option value="hist">History</option>
+                <option value="ed">Education</option>
+              </select>
+            </div>
+          </div>
+          <div class="row pb-2">
+            <div class="col">
+              <select class="form-control" name="interests" required>
+                <option disabled selected value style="display:none">Interest</option>
+                <option value="cs">Computer Science</option>
+                <option value="bio">Biology</option>
+                <option value="phy">Physics</option>
+                <option value="chem">Chemistry</option>
+                <option value="eng">Engineering</option>
+                <option value="arch">Architecture</option>
+                <option value="lang">Language Arts</option>
+                <option value="art">Arts</option>
+                <option value="hist">History</option>
+                <option value="ed">Education</option>
+              </select>
+            </div>
+          </div>
+          <div class="row pb-4">
+            <div class="col">
+              <textarea class="form-control" name="bio" form="profinfo" rows="4" cols="50" placeholder="Tell us about yourself..." form="profinfo" required></textarea>
+            </div>
+          </div>
+          <input class="btn btn-warning text-dark shadow mb-5" type="submit" name="submit" value="Let's go!">
+        </form>
+      </div>
     </div>
-    <form method="POST" id="profinfo" action="/finalizeprofile">
-      <h4>Current Position</h4>
-      <input name="pos" type="text" placeholder="student, CEO, president..."><br>
-
-      <h4>Major/Career Focus</h4>
-      <select name="major">
-        <option disabled selected value style="display:none"></option>
-        <option value="cs">Computer Science</option>
-        <option value="bio">Biology</option>
-        <option value="phy">Physics</option>
-        <option value="chem">Chemistry</option>
-        <option value="eng">Engineering</option>
-        <option value="arch">Architecture</option>
-        <option value="lang">Language Arts</option>
-        <option value="art">Arts</option>
-        <option value="hist">History</option>
-        <option value="ed">Education</option>
-      </select>
-
-      <h4>Interests</h4>
-      <select name="interests">
-        <option disabled selected value style="display:none"></option>
-        <option value="cs">Computer Science</option>
-        <option value="bio">Biology</option>
-        <option value="phy">Physics</option>
-        <option value="chem">Chemistry</option>
-        <option value="eng">Engineering</option>
-        <option value="arch">Architecture</option>
-        <option value="lang">Language Arts</option>
-        <option value="art">Arts</option>
-        <option value="hist">History</option>
-        <option value="ed">Education</option>
-      </select>
-
-      <h4>Bio</h4>
-      <textarea name="bio" form="profinfo" rows="4" cols="50">Tell us about yourself...</textarea>
-      <br><br>
-
-      <input type="submit" placeholder="Take the next step...">
-    </form>
-  </body>
-</html>
+{% endblock %}
