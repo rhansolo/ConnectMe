@@ -217,6 +217,7 @@ def send_js(path):
 def summary():
     randomProfile = fetchrand(user)
     profile = {
+	"id": randomProfile[0],
         "name": randomProfile[1],
         "description": randomProfile[4],
         "status": randomProfile[5],
