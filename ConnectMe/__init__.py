@@ -168,7 +168,7 @@ def finalizeprofile():
     fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
     return redirect(url_for('root'))
 
-@app.route('/authenticate', methods=['POST'])
+@app.route('/authenticate', methods=['POST','GET'])
 def authenticate():
     '''
     Checks user and pass. Makes login and register work. Checks session.
@@ -190,10 +190,10 @@ def authenticate():
         if len(username.strip()) != 0 and not checkuser(username):
             if len(password.strip()) != 0:
                 # add account to DB
-                
+
                 newuser(username, password)
                 flash('Successfully registered account for user  "{}"'.format(username))
-                return redirect(url_for('home'))
+                return redirect(url_for('root'))
             else:
                 flash('Password length insufficient')
         elif len(username) == 0:
