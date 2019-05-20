@@ -86,3 +86,7 @@ Added ability to view and edit profile
 jerryY -- 2019-05-20 13:18
 --------------------------------------------------------------
 Worked on updating database to integrate user messages
+==============================================================
+jerryY -- 2019-05-20 17:18
+--------------------------------------------------------------
+Worked on figuring out oauth2 with linkedin(having lots of difficulty) 
