@@ -138,10 +138,3 @@ def addmsg(txt, user1, user2):
     db.commit()
     db.close()
     return msgs
-    
-def setUser(userName):
-    '''
-    Sets username to be passed to html files.
-    '''
-    global user
-    user = userName
