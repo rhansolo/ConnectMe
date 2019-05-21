@@ -4,149 +4,8 @@ from random import randint
 import datetime
 
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
-# from util import database
-# ---------------------------------------------------------
+from util import database
 
-import sqlite3
-
-dbfile = "data/userdata.db"
-
-def initdb():
-    db = sqlite3.connect(dbfile)
-    return db
-
-def checkuser(user):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT * FROM users WHERE username = ?", (user, ))
-    dupusers = c.fetchall()
-
-    db.close()
-
-    return len(dupusers) > 0
-
-def getpassword(user):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT password FROM users WHERE username = ?", (user, ))
-    password = c.fetchone()[0]
-
-    db.close()
-
-    return password
-
-def resetpassword(user, newpass):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("UPDATE users SET password = ? WHERE username = ?", (newpass, user))
-
-    db.commit()
-    db.close()
-
-def loginuser(user, password):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT * FROM users WHERE username = ? AND password = ?", (user, password))
-    creds = c.fetchall()
-
-    db.close()
-
-    return len(creds) > 0
-
-def newuser(name, user, password):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT * FROM users")
-    usrs = c.fetchall()
-    if len(usrs) == 0:
-        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (0, name, user, password, "", "", "", ""))
-    else:
-        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (len(usrs), name, user, password, "", "", "", ""))
-
-    db.commit()
-    db.close()
-
-    return True
-
-def fillqs(email, bio, pos, maj, intrsts):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("UPDATE users SET bio = ?, position = ?, interests = ?, major = ? WHERE username = ?", (bio, pos, intrsts, maj, email))
-
-    db.commit()
-    db.close()
-
-    return True
-
-def fetchrand(user):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT * FROM users  WHERE username != ? ORDER BY RANDOM() LIMIT 1;", (user, ))
-
-    pf = c.fetchone()
-
-    db.close()
-    return pf
-
-def getuser(user):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT * FROM users WHERE username = ?;", (user, ))
-
-    pf = c.fetchone()
-
-    db.close()
-    return pf
-
-def edituser(name, user, pos, maj, intrsts, bio, olduser):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("UPDATE users SET name = ?, username = ?, bio = ?, position = ?, interests = ?, major = ? WHERE username = ?", (name, user, bio, pos, intrsts, maj, user))
-
-    db.commit()
-    db.close()
-
-    return True
-
-def getmsgs(user1, user2):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT * FROM msgs WHERE user1 = ? AND user2 = ?", (user1, user2))
-
-    msgs = c.fetchall()
-
-    c.execute("SELECT * FROM msgs WHERE user1 = ? AND user2 = ?", (user2, user1))
-
-    msgs.extend(c.fetchall())
-
-    db.close()
-    return msgs
-
-def addmsg(txt, user1, user2):
-    db = initdb()
-    c = db.cursor()
-
-    c.execute("SELECT * FROM msgs")
-    msgs = c.fetchall()
-
-    if len(msgs) == 0:
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, content, str(datetime.now())))
-    else:
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(usrs), user1, user2, content, str(datetime.now())))
-
-    db.commit()
-    db.close()
-    return msgs
 # ---------------------------------------------------------
 
 app = Flask(__name__)
@@ -167,7 +26,7 @@ def setUser(userName):
 @app.route("/")
 def root():
     if user in session:
-        print(fetchrand(user))
+        print(database.fetchrand(user))
         return render_template('swipe.html', crtprof = False, logged_in = True, username = user)
     return render_template('index.html', crtprof = False, logged_in = False)
 '''
@@ -187,7 +46,7 @@ def register():
 def questions():
     if user in session:
         return redirect(url_for('root'))
-    newuser(request.form["name"], request.form["email"], request.form["pswd"])
+    database.newuser(request.form["name"], request.form["email"], request.form["pswd"])
     setUser(request.form["email"])
     return render_template('questions.html', crtprof = True, logged_in=False)
 
@@ -195,7 +54,7 @@ def questions():
 def finalizeprofile():
     if user in session:
         return redirect(url_for('root'))
-    fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
+    database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
     return redirect(url_for('root'))
 
 @app.route('/authenticate', methods=['POST','GET'])
@@ -209,7 +68,7 @@ def authenticate():
     username, password, curr_page = request.form['username'], request.form['password'], request.form['address']
     # LOGGING IN
     if request.form["submit"] == "Login":
-        if username != "" and password != "" and loginuser(username, password):
+        if username != "" and password != "" and database.loginuser(username, password):
             session['user'] = username
             session[username] = password
             setUser(username)
@@ -217,11 +76,11 @@ def authenticate():
         return render_template("index.html", username = "", errors = True, alerts=["Incorrect Credentials"], logged_in = False)
     # REGISTERING
     else:
-        if len(username.strip()) != 0 and not checkuser(username):
+        if len(username.strip()) != 0 and not database.checkuser(username):
             if len(password.strip()) != 0:
                 # add account to DB
 
-                newuser(username, password)
+                database.newuser(username, password)
                 flash('Successfully registered account for user  "{}"'.format(username))
                 return redirect(url_for('root'))
             else:
@@ -245,7 +104,7 @@ def send_js(path):
 
 @app.route("/api/getNextProfile")
 def summary():
-    randomProfile = fetchrand(user)
+    randomProfile = database.fetchrand(user)
     profile = {
 	"id": randomProfile[0],
         "name": randomProfile[1],
@@ -286,27 +145,27 @@ def message(num, message, time):
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if user in session:
-        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=getuser(user))
+        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
     return redirect(url_for('root'))
 
 @app.route('/editprofile', methods=['POST'])
 def editprof():
     if user in session:
-        edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], request.form["interests"], request.form["bio"], user)
-        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=getuser(user))
+        database.edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], request.form["interests"], request.form["bio"], user)
+        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
     return redirect(url_for('root'))
 
 @app.route('/changepass', methods=['POST'])
 def changepass():
     if user in session:
-        if request.form['opswd'] == getpassword(user):
-            resetpassword(user, request.form['pswd'])
-        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=getuser(user))
+        if request.form['opswd'] == database.getpassword(user):
+            database.resetpassword(user, request.form['pswd'])
+        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
     return redirect(url_for('root'))
 
 @app.route('/api/getMessages', methods=['GET'])
 def getMesages():
-    messagesArr = getmsgs(request.args["user1"], request.args["user2"])
+    messagesArr = database.getmsgs(request.args["user1"], request.args["user2"])
     return jsonify(messagesArr)
 
 if __name__ == '__main__':
