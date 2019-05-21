@@ -4,7 +4,7 @@ from random import randint
 import datetime
 
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
-from util import database
+from util import database as database
 
 # ---------------------------------------------------------
 
