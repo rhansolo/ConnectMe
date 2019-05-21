@@ -1,7 +1,7 @@
 import os
 import random
 from random import randint
-import time
+import datetime
 
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
 # from util import database
@@ -132,6 +132,21 @@ def getmsgs(user1, user2):
     db.close()
     return msgs
 
+def addmsg(txt, user1, user2):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM msgs")
+    msgs = c.fetchall()
+
+    if len(msgs) == 0:
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, content, str(datetime.now())))
+    else:
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(usrs), user1, user2, content, str(datetime.now())))
+
+    db.commit()
+    db.close()
+    return msgs
 # ---------------------------------------------------------
 
 app = Flask(__name__)
