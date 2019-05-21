@@ -117,6 +117,21 @@ def edituser(name, user, pos, maj, intrsts, bio, olduser):
 
     return True
 
+def getmsgs(user1, user2):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM msgs WHERE user1 = ? AND user2 = ?", (user1, user2))
+
+    msgs = c.fetchall()
+
+    c.execute("SELECT * FROM msgs WHERE user1 = ? AND user2 = ?", (user2, user1))
+
+    msgs.extend(c.fetchall())
+
+    db.close()
+    return msgs
+
 # ---------------------------------------------------------
 
 app = Flask(__name__)
@@ -276,6 +291,7 @@ def changepass():
 
 @app.route('/api/getMessages', methods=['GET'])
 def getMesages():
+    messagesArr = getmsgs(request.args["user1"], request.args["user2"])
     return jsonify(messagesArr)
 
 if __name__ == '__main__':
