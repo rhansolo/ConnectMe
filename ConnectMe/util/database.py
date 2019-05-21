@@ -75,24 +75,66 @@ def fillqs(email, bio, pos, maj, intrsts):
 
     return True
 
-def fetchrand():
+def fetchrand(user):
     db = initdb()
     c = db.cursor()
 
-    c.execute("SELECT * FROM users ORDER BY RANDOM() LIMIT 1;")
+    c.execute("SELECT * FROM users  WHERE username != ? ORDER BY RANDOM() LIMIT 1;", (user, ))
 
     pf = c.fetchone()
 
     db.close()
     return pf
 
-def getuser(username):
+def getuser(user):
     db = initdb()
     c = db.cursor()
 
-    c.execute("SELECT * FROM users WHERE username = ?", (username, ))
+    c.execute("SELECT * FROM users WHERE username = ?;", (user, ))
 
     pf = c.fetchone()
 
     db.close()
     return pf
+
+def edituser(name, user, pos, maj, intrsts, bio, olduser):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("UPDATE users SET name = ?, username = ?, bio = ?, position = ?, interests = ?, major = ? WHERE username = ?", (name, user, bio, pos, intrsts, maj, user))
+
+    db.commit()
+    db.close()
+
+    return True
+
+def getmsgs(user1, user2):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM msgs WHERE user1 = ? AND user2 = ?", (user1, user2))
+
+    msgs = c.fetchall()
+
+    c.execute("SELECT * FROM msgs WHERE user1 = ? AND user2 = ?", (user2, user1))
+
+    msgs.extend(c.fetchall())
+
+    db.close()
+    return msgs
+
+def addmsg(txt, user1, user2):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM msgs")
+    msgs = c.fetchall()
+
+    if len(msgs) == 0:
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, content, str(datetime.now())))
+    else:
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(usrs), user1, user2, content, str(datetime.now())))
+
+    db.commit()
+    db.close()
+    return msgs
