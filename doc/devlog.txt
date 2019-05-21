@@ -89,3 +89,12 @@ Worked on updating database to integrate user messages
 jerryY -- 2019-05-20 17:18
 --------------------------------------------------------------
 Worked on figuring out oauth2 with linkedin(having lots of difficulty) 
+==============================================================
+robinH -- 2019-05-20 21:15
+--------------------------------------------------------------
+Updated design doc and pushed to repo.
+Changes made:
+	- edited roles based on what has been accomplished already and what still needs work
+	- updated timeline to match what currently has been done and what needs to be accomplished
+	- updated DBSchema to reflect how we are going to store messages sent between users instead of sockets.
+==============================================================
