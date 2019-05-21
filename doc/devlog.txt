@@ -98,3 +98,7 @@ Changes made:
 	- updated timeline to match what currently has been done and what needs to be accomplished
 	- updated DBSchema to reflect how we are going to store messages sent between users instead of sockets.
 ==============================================================
+nahianS -- 2019-05-20 17:18
+--------------------------------------------------------------
+Completed mechanism for chat part of application without using sockets but rather using AJAX. 
+==============================================================
