@@ -102,3 +102,8 @@ nahianS -- 2019-05-20 17:18
 --------------------------------------------------------------
 Completed mechanism for chat part of application without using sockets but rather using AJAX. 
 ==============================================================
+jerryY -- 2019-05-21 17:18
+--------------------------------------------------------------
+Added code to generate database (instead of using in-terminal sqlite commands) 
+updated design doc to reflect database changes
+==============================================================
