@@ -1,6 +1,28 @@
 import sqlite3
 
 dbfile = "data/userdata.db"
+def createdb():
+    db = initdb()
+    c = db.cursor()
+    c.execute('''CREATE TABLE if not exists users (
+	id INTEGER PRIMARY KEY,
+	name TEXT,
+	username TEXT,
+	password TEXT,
+	bio TEXT,
+	position TEXT,
+	interests TEXT,
+    major TEXT
+);''')
+    c.execute('''CREATE TABLE if not exists msgs (
+    	id integer PRIMARY KEY AUTOINCREMENT,
+    	user1 integer,
+    	user2 integer,
+        text TEXT,
+    	time datetime
+    );''')
+    db.commit()
+    db.close()
 
 def initdb():
     db = sqlite3.connect(dbfile)
