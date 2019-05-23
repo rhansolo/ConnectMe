@@ -9,12 +9,17 @@ Questions - ConnectMe
       <div class="col-md-4">
         <h2 class="pb-2"><b>Questions</b></h2>
 
-        <form method="POST" action="/finalizeprofile" id="profinfo">
+        <form method="POST" action="/finalizeprofile" id="profinfo" enctype="multipart/form-data">
           <div class="row pb-2">
+            <div class="col">
+               <input type="file" name="profile" id="profile">
+            </div>
+          </div>
+	    <div class="row pb-2">
             <div class="col">
               <input class="form-control mr-sm-2" name="pos" type="text" placeholder="Position" required>
             </div>
-          </div>
+	</div>
           <div class="row pb-2">
             <div class="col">
               <select class="form-control" name="major" required>

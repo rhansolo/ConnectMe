@@ -4,10 +4,16 @@ from random import randint
 import datetime
 from util import database as database
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
+from werkzeug.utils import secure_filename
 from util import database
+from os.path import join, dirname, realpath
+
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), './static/pictures')
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 database.createdb()
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DIR = os.path.dirname(__file__)
 DIR += '/'
 
@@ -53,8 +59,13 @@ def questions():
 def finalizeprofile():
     if user in session:
         return redirect(url_for('root'))
+    file = request.files['profile']
+    if file:
+        filename = secure_filename(file.filename)
+        filename = user + os.path.splitext(filename)[1]
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
-    return redirect(url_for('root'))
+    return redirect(url_for('profile'))
 
 @app.route('/authenticate', methods=['POST','GET'])
 def authenticate():
