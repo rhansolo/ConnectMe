@@ -181,17 +181,3 @@ def getMesages():
 if __name__ == '__main__':
     app.debug = True
     app.run()
-
-'''
-@app.route("/profile")
-def profile:
-
-@app.route("/profile/edit", methods=["POST"])
-def profedit:
-
-@app.route("/connect")
-def connect:
-
-@app.route("/message")
-def msg:
-'''
