@@ -47,6 +47,7 @@ body {
 }
 
 .tinder_love .fa-heart {
+  opacity: 0.7;
   -webkit-transform: scale(1);
           transform: scale(1);
 }
