@@ -27,6 +27,33 @@ def setUser(userName):
     global user
     user = userName
 
+def convert(tag):
+    if (tag == "cs"):
+        return "Computer Science"
+    if (tag == "bio"):
+        return "Biology"
+    if (tag == "phy"):
+        return "Physics"
+    if (tag == "chem"):
+        return "Chemistry"
+    if (tag == "eng"):
+        return "Engineering"
+    if (tag == "arch"):
+        return "Architecture"
+    if (tag == "lang"):
+        return "Language Arts"
+    if (tag == "art"):
+        return "Arts"
+    if (tag == "hist"):
+        return "History"
+    if (tag == "ed"):
+        return "Education"
+
+def convertList(lst):
+    tmp = []
+    for i in lst:
+        tmp.append(convert(i))
+    return tmp
 
 @app.route("/")
 def root():
@@ -64,7 +91,11 @@ def finalizeprofile():
         filename = secure_filename(file.filename)
         filename = user + os.path.splitext(filename)[1]
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], request.form["interests"])
+    str = ""
+    for i in request.form.getlist("interests"):
+        str += i + ","
+    print(str[:-1])
+    database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], str[:-1])
     return redirect(url_for('profile'))
 
 @app.route('/authenticate', methods=['POST','GET'])
@@ -115,14 +146,15 @@ def send_js(path):
 @app.route("/api/getNextProfile")
 def summary():
     randomProfile = database.fetchrand(user)
+    print(randomProfile[6].split(","))
     profile = {
 	"id": randomProfile[0],
         "name": randomProfile[1],
         "description": randomProfile[4],
         "status": randomProfile[5],
         "lookingFor": 'Mentor',
-        "skills": ['python', 'python', 'python'],
-        "interests": ['python', 'python', 'python'],
+        "skills": [convert(randomProfile[7])],
+        "interests": convertList(randomProfile[6].split(",")),
         "socials": {
             "facebook": 'https://google.com',
             "linkedin": 'https://google.com',

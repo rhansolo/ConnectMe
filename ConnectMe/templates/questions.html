@@ -5,21 +5,26 @@ Questions - ConnectMe
 {% endblock %}
 
 {% block content %}
-    <div class = "container" style="position: absolute; left: 10%; top: 20%;width: 75%;">
+    <div class = "container" style="position: absolute; left: 10%; top: 10%;width: 100%;">
       <div class="col-md-4">
         <h2 class="pb-2"><b>Questions</b></h2>
 
+        <b>Upload a profile picture!</b>
         <form method="POST" action="/finalizeprofile" id="profinfo" enctype="multipart/form-data">
-          <div class="row pb-2">
-            <div class="col">
-               <input type="file" name="profile" id="profile">
-            </div>
+        <div class="row pb-2">
+          <div class="col">
+            <input type="file" name="profile" id="profile">
           </div>
-	    <div class="row pb-2">
-            <div class="col">
-              <input class="form-control mr-sm-2" name="pos" type="text" placeholder="Position" required>
-            </div>
-	</div>
+        </div>
+
+        <b>Position</b>
+	       <div class="row pb-2">
+           <div class="col">
+             <input class="form-control mr-sm-2" name="pos" type="text" placeholder="Position" required>
+           </div>
+	       </div>
+
+        <b>Major</b>
           <div class="row pb-2">
             <div class="col">
               <select class="form-control" name="major" required>
@@ -37,29 +42,32 @@ Questions - ConnectMe
               </select>
             </div>
           </div>
+
+          <b>Interests</b>
           <div class="row pb-2">
-            <div class="col">
-              <select class="form-control" name="interests" required>
-                <option disabled selected value style="display:none">Interest</option>
-                <option value="cs">Computer Science</option>
-                <option value="bio">Biology</option>
-                <option value="phy">Physics</option>
-                <option value="chem">Chemistry</option>
-                <option value="eng">Engineering</option>
-                <option value="arch">Architecture</option>
-                <option value="lang">Language Arts</option>
-                <option value="art">Arts</option>
-                <option value="hist">History</option>
-                <option value="ed">Education</option>
-              </select>
+            <div class="col" >
+                <input type = "checkbox" name="interests" value="cs">Computer Science<br>
+                <input type = "checkbox"  name="interests" value="bio">Biology<br>
+                <input type = "checkbox"  name="interests" value="phy">Physics<br>
+                <input type = "checkbox"  name="interests" value="chem">Chemistry<br>
+                <input type = "checkbox"  name="interests" value="eng">Engineering<br>
+                <input type = "checkbox"  name="interests" value="arch">Architecture<br>
+                <input type = "checkbox"  name="interests" value="lang">Language Arts<br>
+                <input type = "checkbox"  name="interests" value="art">Arts<br>
+                <input type = "checkbox"  name="interests" value="hist">History<br>
+                <input type = "checkbox"  name="interests" value="ed">Education<br>
             </div>
           </div>
+
+          <b>Bio</b>
           <div class="row pb-4">
             <div class="col">
               <textarea class="form-control" name="bio" form="profinfo" rows="4" cols="50" placeholder="Tell us about yourself..." form="profinfo" required></textarea>
             </div>
           </div>
+
           <input class="btn btn-warning text-dark shadow mb-5" type="submit" name="submit" value="Let's go!">
+
         </form>
       </div>
     </div>
