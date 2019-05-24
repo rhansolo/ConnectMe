@@ -5,3 +5,5 @@ Software Development Second Term Project
 [color scheme](https://coolors.co/ffffff-2e294e-222222-e71d36-104547)
 
 [apache link](http://206.189.197.22/)
+
+[default pfp link](https://eecs.ceas.uc.edu/DDEL/images/default_display_picture.png/@@images/image.png)
