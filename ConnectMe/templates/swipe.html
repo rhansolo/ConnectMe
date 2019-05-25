@@ -26,14 +26,19 @@
             {% endif %}
             {% if logged_in %}
               <div class="row">
+                 <div class="col">
+                  <form class="form-inline my-2 my-lg-0" action="/messages">
+                         <button class="form-control btn my-2 my-sm-0" type="submit">Messages <i class="fa fa-comments"></i></a>
+                  </form>
+                </div>
                 <div class="col">
                   <form class="form-inline my-2 my-lg-0" action="/profile">
-                         <button class="form-control btn my-2 my-sm-0" type="submit">{{ username }}</a>
+                         <button class="form-control btn my-2 my-sm-0" type="submit">{{ username }} </a>
                   </form>
                 </div>
                 <div class="col">
                   <form class="form-inline my-2 my-lg-0" action="/logout">
-                         <button class="form-control btn my-2 my-sm-0" type="submit">Logout</a>
+                         <button class="form-control btn my-2 my-sm-0" type="submit">Logout <i class="fa-sign-out"></i></a>
                   </form>
                 </div>
               </div>

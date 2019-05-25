@@ -6,16 +6,17 @@ Questions - ConnectMe
 
 {% block content %}
     <div class = "container" style="position: absolute; left: 10%; top: 10%;width: 100%;">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <h2 class="pb-2"><b>Questions</b></h2>
 
-        <b>Upload a profile picture!</b>
         <form method="POST" action="/finalizeprofile" id="profinfo" enctype="multipart/form-data">
+        <b>Upload a profile picture!</b>
         <div class="row pb-2">
           <div class="col">
             <input type="file" name="profile" id="profile">
           </div>
         </div>
+        <p class="text-danger">Only JPG and JPEG images are currently supported</p>
 
         <b>Position</b>
 	       <div class="row pb-2">

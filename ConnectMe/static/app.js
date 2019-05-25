@@ -149,7 +149,7 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
     spinner.remove()
     document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
    <div class="tinder--card">
-      <img src="./file/pictures/${myJson.name}.jpeg"}>
+      <img src="./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg"}>
       <h3 class="name">${myJson.name}</h3>
       <p>${myJson.status}</p>
       <p>Looking for: ${myJson.lookingFor}</p>

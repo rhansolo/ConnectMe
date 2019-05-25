@@ -19,16 +19,17 @@
           </div>
           <div class="row pb-2">
             <div class="col">
-              <input class="form-control mr-sm-2" name="pswd" type="password" placeholder = "Password" required>
+              <input class="form-control mr-sm-2" id="password" name="pswd" type="password" placeholder = "Password" required>
             </div>
           </div>
           <div class="row pb-4">
             <div class="col">
-              <input class="form-control mr-sm-2" name="cpswd" type="password" placeholder = "Confirm Password" required>
+              <input class="form-control mr-sm-2" id="confirmPassword" name="cpswd" type="password" placeholder = "Confirm Password" required>
             </div>
           </div>
-          <input class="btn btn-warning text-dark shadow mb-5" type="submit" name="submit" value="I'm ready...">
+          <input class="btn btn-warning text-dark shadow mb-5" id="readyButton" type="submit" name="submit" value="I'm ready...">
         </form>
       </div>
     </div>
+      <script src='./file/register.js'></script>
 {% endblock %}

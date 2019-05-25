@@ -2,10 +2,10 @@ import os
 import random
 from random import randint
 import datetime
-from util import database as database
+import database as database
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
-from util import database
+# from util import database
 from os.path import join, dirname, realpath
 
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), './static/pictures')
@@ -89,7 +89,7 @@ def finalizeprofile():
     file = request.files['profile']
     if file:
         filename = secure_filename(file.filename)
-        filename = user + os.path.splitext(filename)[1]
+        filename = user.replace('.', '-').replace('@', '-') + '.jpeg'
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     str = ""
     for i in request.form.getlist("interests"):
@@ -146,10 +146,12 @@ def send_js(path):
 @app.route("/api/getNextProfile")
 def summary():
     randomProfile = database.fetchrand(user)
+    print(randomProfile)
     print(randomProfile[6].split(","))
     profile = {
-	"id": randomProfile[0],
+	    "id": randomProfile[0],
         "name": randomProfile[1],
+        "email": randomProfile[2],
         "description": randomProfile[4],
         "status": randomProfile[5],
         "lookingFor": 'Mentor',
@@ -172,7 +174,7 @@ def messages():
         cryptoNum = random.randint(1,100000)
         users[cryptoNum] = session['user']
         print(users)
-        return render_template('message.html', num=cryptoNum)
+        return render_template('messagesList.html', num=cryptoNum)
 
 @app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
 def message(num, message, time):
@@ -193,6 +195,11 @@ def profile():
 @app.route('/editprofile', methods=['POST'])
 def editprof():
     if user in session:
+        file = request.files['profile']
+        if file:
+            filename = secure_filename(file.filename)
+            filename = user.replace('.', '-').replace('@', '-') + '.jpeg'
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         database.edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], request.form["interests"], request.form["bio"], user)
         return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
     return redirect(url_for('root'))
