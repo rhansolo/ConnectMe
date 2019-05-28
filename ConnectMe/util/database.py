@@ -15,11 +15,16 @@ def createdb():
     major TEXT
 );''')
     c.execute('''CREATE TABLE if not exists msgs (
-    	id integer PRIMARY KEY AUTOINCREMENT,
-    	user1 integer,
-    	user2 integer,
+    	id INTEGER PRIMARY KEY,
+    	user1 INTEGER,
+    	user2 INTEGER,
         text TEXT,
-    	time datetime
+    	time TEXT
+    );''')
+    c.execute('''CREATE TABLE if not exists swipes (
+    	id INTEGER PRIMARY KEY ,
+    	user1 INTEGER,
+    	user2 INTEGER
     );''')
     db.commit()
     db.close()
@@ -101,9 +106,16 @@ def fetchrand(user):
     db = initdb()
     c = db.cursor()
 
-    c.execute("SELECT * FROM users  WHERE username != ? ORDER BY RANDOM() LIMIT 1;", (user, ))
+    swipes = getswipes(user)
+    swipes = {int(s[2]) for s in swipes}
 
-    pf = c.fetchone()
+    c.execute("SELECT * FROM users WHERE username != ? ORDER BY RANDOM() LIMIT 1;", (user, ))
+
+    pf = c.fetchall()
+
+    for i in range(len(pf)):
+        if pf[i][0] in swipes:
+            pf.remove(i)
 
     db.close()
     return pf
@@ -160,3 +172,31 @@ def addmsg(txt, user1, user2):
     db.commit()
     db.close()
     return msgs
+
+def swipe(user1, user2, dirr):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM swipes")
+    swipes = c.fetchall()
+
+    if dirr:
+        c.execute("INSERT INTO msgs VALUES(?,?,?)", (len(usrs) + 1, user1, user2))
+    else:
+        c.execute("INSERT INTO msgs VALUES(?,?,?)", (-1 * (len(usrs) + 1), user1, user2))
+
+    db.commit()
+    db.close()
+    return True
+
+def getswipes(user):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM swipes WHERE user1 = ?;", (user,))
+    swipes = c.fetchall()
+
+    db.close()
+    return swipes
+
+    

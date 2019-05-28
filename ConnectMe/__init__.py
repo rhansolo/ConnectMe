@@ -217,6 +217,16 @@ def getMesages():
     messagesArr = database.getmsgs(request.args["user1"], request.args["user2"])
     return jsonify(messagesArr)
 
+@app.route('/right', methods=['GET'])
+def sr():
+    database.swipe(int(request.args['user1']), int(request.args['user2']), True)
+    swipes = database.getswipes(request.args['user1'])
+    return jsonify(swipes)
+
+@app.route('/left', methods=['GET'])
+def sl():
+    database.swipe(int(request.args['user1']), int(request.args['user2']), False)
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
