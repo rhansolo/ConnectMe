@@ -112,3 +112,6 @@ robinH -- 2019-05-24 12:59
 Changed color scheme and changed interests such that user can select multiple interests instead of just one.
 Also processes selected interest to display on profile cards.
 ==============================================================
+jerryY -- 2019-05-28 13:18
+--------------------------------------------------------------
+Continued testing for linkedin oauth2 api 
