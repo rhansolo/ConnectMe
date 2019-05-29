@@ -12,7 +12,8 @@ def createdb():
 	bio TEXT,
 	position TEXT,
 	interests TEXT,
-    major TEXT
+        major TEXT,
+        picpath TEXT
 );''')
     c.execute('''CREATE TABLE if not exists msgs (
     	id INTEGER PRIMARY KEY,
