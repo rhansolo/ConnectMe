@@ -200,4 +200,14 @@ def getswipes(user):
     db.close()
     return swipes
 
+def getuserid(user):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users WHERE username = ?;", (user,))
+    uid = c.fetchone()[0]
+
+    db.close()
+    return uid
+
     
