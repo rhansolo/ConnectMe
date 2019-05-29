@@ -83,9 +83,9 @@ def newuser(name, user, password):
     c.execute("SELECT * FROM users")
     usrs = c.fetchall()
     if len(usrs) == 0:
-        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (0, name, user, password, "", "", "", ""))
+        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?,?)", (0, name, user, password, "", "", "", "", ""))
     else:
-        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?)", (len(usrs), name, user, password, "", "", "", ""))
+        c.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?,?,?)", (len(usrs), name, user, password, "", "", "", "", ""))
 
     db.commit()
     db.close()
