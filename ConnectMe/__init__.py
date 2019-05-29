@@ -2,10 +2,10 @@ import os
 import random
 from random import randint
 import datetime
-import database as database
+# import database as database
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
-# from util import database
+from util import database
 from os.path import join, dirname, realpath
 
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), './static/pictures')
@@ -59,6 +59,8 @@ def convertList(lst):
 def root():
     if user in session:
         print(database.fetchrand(user))
+        print(database.getuserid(user))
+        print('hello')
         return render_template('swipe.html', crtprof = False, logged_in = True, username = user)
     return render_template('index.html', crtprof = False, logged_in = False)
 '''

@@ -63,7 +63,7 @@ var initListeners = () => allCards.forEach(function (el) {
     var keep = Math.abs(event.deltaX) < 80 || Math.abs(event.velocityX) < 0.5;
     console.log(moveOutWidth - Math.abs(event.deltaX))
     // if (moveOutWidth - Math.abs(event.deltaX) < 1000) {
-    //   keep = false; 
+    //   keep = false;
     // }
     event.target.classList.toggle('removed', !keep);
     if (keep) {
@@ -78,6 +78,7 @@ var initListeners = () => allCards.forEach(function (el) {
       var rotate = xMulti * yMulti;
 
       if (toX > 0) {
+
         console.log(el.innerHTML)
       } else {
         console.error(el.innerHTML)
@@ -88,6 +89,16 @@ var initListeners = () => allCards.forEach(function (el) {
     }
   });
 });
+
+const myId = 2;
+
+const swipeLeft = () => {
+
+}
+
+const swipeRight = () => {
+
+}
 
 function initCards(card, index) {
   var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
@@ -136,6 +147,7 @@ var nopeListener = createButtonListener(false);
 var loveListener = createButtonListener(true);
 
 
+let activeProfileId = -1;
 function getNextProfile () {
 document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class="spinner" id="spinner"></div>`)
   fetch('./api/getNextProfile')
@@ -145,6 +157,8 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
   })
   .then(function(myJson) {
     console.log(JSON.stringify(myJson));
+    // console.log(myJson.id)
+    activeProfileId = myJson.id;
     var spinner = document.getElementById('spinner');
     spinner.remove()
     document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
