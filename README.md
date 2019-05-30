@@ -1,6 +1,6 @@
 # ConnectMe
-## Billionaires Boys Club
-### Project Manager: [Robin Han](https://www.github.com/robinhanstuy/) | Members: Sajed Nahian, Jerry Ye, [Bill Ni](https://www.github.com/bnidevs/)<img src="https://ballzbeatz.com/wp-content/uploads/2018/01/Billionaire-Boys-Club-Logo-Decal-Sticker.jpg" height="60">
+### Billionaires Boys Club<img src="https://ballzbeatz.com/wp-content/uploads/2018/01/Billionaire-Boys-Club-Logo-Decal-Sticker.jpg" height="60" style="margin-top:=-20px">
+#### Project Manager: [Robin Han](https://www.github.com/robinhanstuy/) | Members: [Sajed Nahian](https://github.com/SajedNahian), [Jerry Ye](https://github.com/jerry1ye10), [Bill Ni](https://www.github.com/bnidevs/)
 Software Development Second Term Project 
 
 Overview:  
