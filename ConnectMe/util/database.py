@@ -119,7 +119,7 @@ def fetchrand(user):
             pf.remove(i)
 
     db.close()
-    return pf
+    return pf[0]
 
 def getuser(user):
     db = initdb()
