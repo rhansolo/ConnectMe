@@ -115,3 +115,8 @@ Also processes selected interest to display on profile cards.
 jerryY -- 2019-05-28 13:18
 --------------------------------------------------------------
 Continued testing for linkedin oauth2 api 
+==============================================================
+nahianS, jerryY -- 2019-05-29 12:43
+--------------------------------------------------------------
+Worked on image uploads and made it so that different file types are supported.
+==============================================================
