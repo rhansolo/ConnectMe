@@ -58,10 +58,9 @@ def convertList(lst):
 @app.route("/")
 def root():
     if user in session:
-        print(database.fetchrand(user))
-        print(database.getuserid(user))
-        print('hello')
-        return render_template('swipe.html', crtprof = False, logged_in = True, username = user)
+        userId = database.getuserid(user)[0]
+        print('USERID: ' + str(userId))
+        return render_template('swipe.html', crtprof = False, logged_in = True, username = user, id = userId)
     return render_template('index.html', crtprof = False, logged_in = False)
 '''
 @app.route("/login", methods=["POST"])
@@ -96,7 +95,6 @@ def finalizeprofile():
     str = ""
     for i in request.form.getlist("interests"):
         str += i + ","
-    print(str[:-1])
     database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], str[:-1])
     return redirect(url_for('profile'))
 
@@ -142,14 +140,11 @@ def logout():
 
 @app.route('/file/<path:path>')
 def send_js(path):
-    print(path)
     return send_from_directory('static', path)
 
 @app.route("/api/getNextProfile")
 def summary():
     randomProfile = database.fetchrand(user)
-    print(randomProfile)
-    print(randomProfile[6].split(","))
     profile = {
 	    "id": randomProfile[0],
         "name": randomProfile[1],
@@ -165,7 +160,6 @@ def summary():
             "twitter": 'https://google.com',
         }
     }
-    print(user in session)
     return jsonify(profile)
 # send it back as json
 messagesArr = []
@@ -175,7 +169,6 @@ def messages():
     if 'user' in session:
         cryptoNum = random.randint(1,100000)
         users[cryptoNum] = session['user']
-        print(users)
         return render_template('messagesList.html', num=cryptoNum)
 
 @app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
@@ -185,7 +178,6 @@ def message(num, message, time):
         'message': message,
         'time': time
     })
-    print(messagesArr)
     return jsonify({'message': 'success'})
 
 @app.route('/profile', methods=['GET', 'POST'])

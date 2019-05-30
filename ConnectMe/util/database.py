@@ -205,9 +205,7 @@ def getuserid(user):
     c = db.cursor()
 
     c.execute("SELECT * FROM users WHERE username = ?;", (user,))
-    uid = c.fetchone()[0]
+    uid = c.fetchone()
 
     db.close()
     return uid
-
-    

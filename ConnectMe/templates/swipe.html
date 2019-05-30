@@ -14,9 +14,10 @@
 
 <body>
   <div class="container">
+
     <nav class="navbar fixed-top navbar-dark flex-row">
       <!-- The navbar present at the top of our demo page -->
-        <a class="navbar-brand" href="/"><b>ConnectMe</b></a>
+        <a class="navbar-brand" href="/"><b>ConnectMe {{id}}</b></a>
         {% block login %}
           {% if not crtprof %}
             {% if not logged_in %}
@@ -61,7 +62,7 @@
 
   <div class="tinder--buttons">
     <button id="nope"><i class="fa fa-remove"></i></button>
-    <button id="message"><i class="fa fa-comments"></i></button> 
+    <button id="message"><i class="fa fa-comments"></i></button>
     <button id="love"><i class="fa fa-heart"></i></button>
   </div>
 </div>
