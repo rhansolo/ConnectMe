@@ -17,7 +17,7 @@
 
     <nav class="navbar fixed-top navbar-dark flex-row">
       <!-- The navbar present at the top of our demo page -->
-        <a class="navbar-brand" href="/"><b>ConnectMe {{id}}</b></a>
+        <a class="navbar-brand" href="/"><b>ConnectMe</b></a>
         {% block login %}
           {% if not crtprof %}
             {% if not logged_in %}
@@ -48,7 +48,7 @@
         {% endblock %}
     </nav>
   </div>
-
+  <div id="userId">{{id}}</div>
   <br>
 
   <div class="tinder">

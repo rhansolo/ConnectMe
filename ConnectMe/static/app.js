@@ -4,34 +4,8 @@ var tinderContainer = document.querySelector('.tinder');
 var allCards = document.querySelectorAll('.tinder--card');
 var nope = document.getElementById('nope');
 var love = document.getElementById('love');
-
-// for (let i = 0; i < count; i++) {
-//   document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
-//    <div class="tinder--card">
-//       <img src="./file/trump.jpg">
-//       <h3 class="name">Donald J Trump</h3>
-//       <p>Student at University of Pennsylvania</p>
-//       <p>Looking for: Mentor</p>
-//       <br>
-//       <div class="left info">
-//         <p><strong>Skills</strong></p>
-//         <p>-Python</p>
-//         <p>-Java</p>
-//       </div>
-//       <div class="right info">
-//         <p><strong>Interested In</strong></p>
-//         <p>-Internships</p>
-//         <p>-Learning opportunities</p>
-//       </div>
-//       <div class="socials">
-//         <a href="https://google.com"><i class="fa fa-linkedin"></i></a>
-//         <a href="https://google.com"><i class="fa fa-facebook"></i></a>
-//         <a href="https://google.com"><i class="fa fa-twitter"></i></a>
-//       </div>
-//     </div>`)
-// }
-
-
+var userId = parseInt(document.getElementById('userId').textContent)
+console.log(userId)
 var initListeners = () => allCards.forEach(function (el) {
   var hammertime = new Hammer(el);
 
@@ -157,14 +131,17 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
     return response.json();
   })
   .then(function(myJson) {
-    console.log(JSON.stringify(myJson));
+    // console.log(JSON.stringify(myJson));
     // console.log(myJson.id)
     activeProfileId = myJson.id;
+    // console.log(activeProfileId)
     var spinner = document.getElementById('spinner');
     spinner.remove()
     document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
    <div class="tinder--card">
-      <img src="./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg" style="width:200;height:200;"}>
+      <div class="thumb">
+        <img src="./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg" style="width:200;height:200;"}>
+      </div>
       <h3 class="name">${myJson.name}</h3>
       <p>${myJson.status}</p>
       <p>Looking for: ${myJson.lookingFor}</p>

@@ -163,7 +163,7 @@ def messages():
     if 'user' in session:
         cryptoNum = random.randint(1,100000)
         users[cryptoNum] = session['user']
-        return render_template('messagesList.html', num=cryptoNum)
+        return render_template('messagesList.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
 
 @app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
 def message(num, message, time):
@@ -207,6 +207,8 @@ def getMesages():
 
 @app.route('/right', methods=['GET'])
 def sr():
+    print(request.args['user1'])
+    print(request.args['user2'])
     database.swipe(int(request.args['user1']), int(request.args['user2']), True)
     swipes = database.getswipes(request.args['user1'])
     print(swipes)

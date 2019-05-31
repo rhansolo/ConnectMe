@@ -13,17 +13,86 @@
 </head>
 <body>
 	<div class="container">
-		<h2 class="center">Messages</h2>
-		<br>
-	  <div class="row">
-	    <div class="col-sm">
-	      	<div class="card">
-				  <div class="card-body">
-				    This is some text within a card body.
-				  </div>
+	    <nav class="navbar fixed-top navbar-dark flex-row">
+      <!-- The navbar present at the top of our demo page -->
+        <a class="navbar-brand" href="/"><b>ConnectMe</b></a>
+        {% block login %}
+          {% if not crtprof %}
+            {% if not logged_in %}
+                <form class="form-inline my-2 my-lg-0" action="/register">
+                       <button class="form-control btn my-2 my-sm-0" type="submit">Register</a>
+                </form>
+            {% endif %}
+            {% if logged_in %}
+              <div class="row">
+                 <div class="col">
+                  <form class="form-inline my-2 my-lg-0" action="/messages">
+                         <button class="form-control btn my-2 my-sm-0" type="submit">Messages <i class="fa fa-comments"></i></a>
+                  </form>
+                </div>
+                <div class="col">
+                  <form class="form-inline my-2 my-lg-0" action="/profile">
+                         <button class="form-control btn my-2 my-sm-0" type="submit">{{ username }} </a>
+                  </form>
+                </div>
+                <div class="col">
+                  <form class="form-inline my-2 my-lg-0" action="/logout">
+                         <button class="form-control btn my-2 my-sm-0" type="submit">Logout <i class="fa-sign-out"></i></a>
+                  </form>
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endblock %}
+    </nav>
+		<div class="main">
+			<h2 class="center">Messages</h2>
+			<br>
+		  <div class="row">
+		    <div class="col-sm">
+		    		<a href="">
+			    		<div class="card">
+							  <div class="card-body">
+							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
+							  	<span class="name"><b>Anonymous Anon</b></span>
+							  	<span class="lastMessage">Hey whats up?</span>
+							  </div>
+						</div>
+		    		</a>
+
+		    		<a href="">
+			    		<div class="card">
+							  <div class="card-body">
+							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
+							  	<span class="name"><b>Anonymous Anon</b></span>
+							  	<span class="lastMessage">Hey whats up?</span>
+							  </div>
+						</div>
+		    		</a>
+
+		    		<a href="">
+			    		<div class="card">
+							  <div class="card-body">
+							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
+							  	<span class="name"><b>Anonymous Anon</b></span>
+							  	<span class="lastMessage">Hey whats up?</span>
+							  </div>
+						</div>
+		    		</a>
+
+		    		<a href="">
+			    		<div class="card">
+							  <div class="card-body">
+							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
+							  	<span class="name"><b>Anonymous Anon</b></span>
+							  	<span class="lastMessage">Hey whats up?</span>
+							  </div>
+						</div>
+		    		</a>
+
+		    </div>
+		  </div>
 			</div>
-	    </div>
-	  </div>
 	</div>
 
 </body>
