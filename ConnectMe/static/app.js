@@ -93,10 +93,11 @@ var initListeners = () => allCards.forEach(function (el) {
 const myId = 2;
 
 const swipeLeft = () => {
-
+  console.log("Swiped left");
 }
 
 const swipeRight = () => {
+  console.log("swiped right");
 
 }
 
@@ -163,11 +164,10 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
     spinner.remove()
     document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
    <div class="tinder--card">
-      <img src="./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg"}>
+      <img src="./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg" style="width:200;height:200;"}>
       <h3 class="name">${myJson.name}</h3>
       <p>${myJson.status}</p>
       <p>Looking for: ${myJson.lookingFor}</p>
-      <br>
       <div class="left info">
         <p><strong>Skills</strong></p>
         ${generatePList(myJson.skills)}

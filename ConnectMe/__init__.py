@@ -62,13 +62,7 @@ def root():
         print('USERID: ' + str(userId))
         return render_template('swipe.html', crtprof = False, logged_in = True, username = user, id = userId)
     return render_template('index.html', crtprof = False, logged_in = False)
-'''
-@app.route("/login", methods=["POST"])
-def login():
- 	if user in session:
-    	return redirect(url_for('root'))
-    return render_template('login.html',logged_in = False)
-'''
+
 @app.route('/register', methods=["POST", "GET"])
 def register():
     if user in session:
@@ -215,6 +209,7 @@ def getMesages():
 def sr():
     database.swipe(int(request.args['user1']), int(request.args['user2']), True)
     swipes = database.getswipes(request.args['user1'])
+    print(swipes)
     return jsonify(swipes)
 
 @app.route('/left', methods=['GET'])
