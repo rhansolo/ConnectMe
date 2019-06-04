@@ -58,7 +58,6 @@ var initListeners = () => allCards.forEach(function (el) {
         swipeLeft();
         // console.error(el.innerHTML)
       }
-	getNextProfile()
       event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
 
     }
@@ -76,7 +75,16 @@ const swipeLeft = () => {
   })
   .then(function(myJson) {
     console.log(myJson)
+      getNextProfile();
   })
+}
+
+const matchText = document.getElementById('matchText')
+matchText.style.display = 'none';
+
+const showMatch = () => {
+  matchText.style.display = 'block'; 
+  setTimeout(() => {matchText.style.display = 'none';}, 500);
 }
 
 const swipeRight = () => {
@@ -91,7 +99,10 @@ const swipeRight = () => {
       return arr[1] == activeProfileId && arr[2] == userId
     })
     if (match) {
-      alert(`Its a match`)
+      showMatch();
+      setTimeout(getNextProfile, 500)
+    } else {
+      getNextProfile();
     }
   })
 }
