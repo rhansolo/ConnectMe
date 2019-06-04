@@ -122,7 +122,10 @@ def fetchrand(user):
         i += 1
 
     db.close()
-    return pf[0]
+    if len(pf) > 0:
+        return pf[0]
+    else:
+        return pf[0]
 
 def getuser(user):
     db = initdb()
