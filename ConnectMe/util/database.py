@@ -119,6 +119,7 @@ def fetchrand(user):
         if pf[i][0] in swipes:
             pf.remove(i)
             i -= 1
+        i += 1
 
     db.close()
     return pf[0]
