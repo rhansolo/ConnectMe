@@ -217,6 +217,9 @@ def sr():
 @app.route('/left', methods=['GET'])
 def sl():
     database.swipe(int(request.args['user1']), int(request.args['user2']), False)
+    swipes = database.getswipes(request.args['user1'])
+    print(swipes)
+    return jsonify(swipes)
 
 if __name__ == '__main__':
     app.debug = True
