@@ -2,10 +2,10 @@ import os
 import random
 from random import randint
 import datetime
-# import database as database
+import database as database
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
-from util import database
+# from util import database
 from os.path import join, dirname, realpath
 
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), './static/pictures')
@@ -210,14 +210,14 @@ def sr():
     print(request.args['user1'])
     print(request.args['user2'])
     database.swipe(int(request.args['user1']), int(request.args['user2']), True)
-    swipes = database.getswipes(request.args['user1'])
+    swipes = database.getallswipes()
     print(swipes)
     return jsonify(swipes)
 
 @app.route('/left', methods=['GET'])
 def sl():
     database.swipe(int(request.args['user1']), int(request.args['user2']), False)
-    swipes = database.getswipes(request.args['user1'])
+    swipes = database.getallswipes()
     print(swipes)
     return jsonify(swipes)
 

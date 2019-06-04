@@ -52,10 +52,11 @@ var initListeners = () => allCards.forEach(function (el) {
       var rotate = xMulti * yMulti;
 
       if (toX > 0) {
-
-        console.log(el.innerHTML)
+        swipeRight();
+        // console.log(el.innerHTML)
       } else {
-        console.error(el.innerHTML)
+        swipeLeft();
+        // console.error(el.innerHTML)
       }
 	getNextProfile()
       event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
@@ -67,12 +68,32 @@ var initListeners = () => allCards.forEach(function (el) {
 const myId = 2;
 
 const swipeLeft = () => {
-  console.log("Swiped left");
+  const url = `./left?user1=${userId}&user2=${activeProfileId}`
+  // console.error(url)
+   fetch(url)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson)
+  })
 }
 
 const swipeRight = () => {
-  console.log("swiped right");
-
+  const url = `./right?user1=${userId}&user2=${activeProfileId}`
+  fetch(url)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson)
+    const match = myJson.some(arr => {
+      return arr[1] == activeProfileId && arr[2] == userId
+    })
+    if (match) {
+      alert(`Its a match`)
+    }
+  })
 }
 
 function initCards(card, index) {
@@ -105,10 +126,10 @@ function createButtonListener(love) {
     card.classList.add('removed');
 
     if (love) {
-      console.log(card.innerHTML)
+      // console.log(card.innerHTML)
       card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
     } else {
-      console.error(card.innerHTML)
+      // console.error(card.innerHTML)
       card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
     }
 	   getNextProfile()
@@ -127,7 +148,7 @@ function getNextProfile () {
 document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class="spinner" id="spinner"></div>`)
   fetch('./api/getNextProfile')
   .then(function(response) {
-    console.log('hello')
+    console.log(response)
     return response.json();
   })
   .then(function(myJson) {

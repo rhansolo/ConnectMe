@@ -5,27 +5,27 @@ def createdb():
     db = initdb()
     c = db.cursor()
     c.execute('''CREATE TABLE if not exists users (
-	id INTEGER PRIMARY KEY,
-	name TEXT,
-	username TEXT,
-	password TEXT,
-	bio TEXT,
-	position TEXT,
-	interests TEXT,
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    username TEXT,
+    password TEXT,
+    bio TEXT,
+    position TEXT,
+    interests TEXT,
         major TEXT,
         picpath TEXT
 );''')
     c.execute('''CREATE TABLE if not exists msgs (
-    	id INTEGER PRIMARY KEY,
-    	user1 INTEGER,
-    	user2 INTEGER,
+        id INTEGER PRIMARY KEY,
+        user1 INTEGER,
+        user2 INTEGER,
         text TEXT,
-    	time TEXT
+        time TEXT
     );''')
     c.execute('''CREATE TABLE if not exists swipes (
-    	id INTEGER PRIMARY KEY ,
-    	user1 INTEGER,
-    	user2 INTEGER
+        id INTEGER PRIMARY KEY ,
+        user1 INTEGER,
+        user2 INTEGER
     );''')
     db.commit()
     db.close()
@@ -199,6 +199,17 @@ def getswipes(user):
 
     db.close()
     return swipes
+
+def getallswipes():
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM swipes;")
+    swipes = c.fetchall()
+
+    db.close()
+    return swipes
+
 
 def getuserid(user):
     db = initdb()
