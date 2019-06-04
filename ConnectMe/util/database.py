@@ -114,9 +114,11 @@ def fetchrand(user):
 
     pf = c.fetchall()
 
-    for i in range(len(pf)):
+    i = 0
+    while i < len(pf):
         if pf[i][0] in swipes:
             pf.remove(i)
+            i -= 1
 
     db.close()
     return pf[0]
