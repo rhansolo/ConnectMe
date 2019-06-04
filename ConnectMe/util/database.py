@@ -110,7 +110,7 @@ def fetchrand(user):
     swipes = getswipes(user)
     swipes = {int(s[2]) for s in swipes}
 
-    c.execute("SELECT * FROM users WHERE username != ? ORDER BY RANDOM() LIMIT 1;", (user, ))
+    c.execute("SELECT * FROM users WHERE username != ? ORDER BY RANDOM();", (user, ))
 
     pf = c.fetchall()
 
