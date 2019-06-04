@@ -182,9 +182,9 @@ def swipe(user1, user2, dirr):
     swipes = c.fetchall()
 
     if dirr:
-        c.execute("INSERT INTO msgs VALUES(?,?,?)", (len(usrs) + 1, user1, user2))
+        c.execute("INSERT INTO swipes VALUES(?,?,?)", (len(swipes) + 1, user1, user2))
     else:
-        c.execute("INSERT INTO msgs VALUES(?,?,?)", (-1 * (len(usrs) + 1), user1, user2))
+        c.execute("INSERT INTO swipes VALUES(?,?,?)", (-1 * (len(swipes) + 1), user1, user2))
 
     db.commit()
     db.close()
