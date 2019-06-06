@@ -14,9 +14,6 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 database.createdb()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-DIR = os.path.dirname(__file__)
-DIR += '/'
-
 app.secret_key = os.urandom(32)
 user = None
 

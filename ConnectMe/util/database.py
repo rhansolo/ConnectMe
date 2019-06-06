@@ -1,7 +1,13 @@
 import sqlite3
+import os
 import datetime
 
+DIR = os.path.dirname(__file__) or '.'
+DIR += '/../'
+
+DATABASE_LINK = DIR + "data/userdata.db"
 dbfile = "data/userdata.db"
+
 def createdb():
     db = initdb()
     c = db.cursor()
@@ -32,7 +38,7 @@ def createdb():
     db.close()
 
 def initdb():
-    db = sqlite3.connect(dbfile)
+    db = sqlite3.connect(DATABASE_LINK)
     return db
 
 def checkuser(user):
