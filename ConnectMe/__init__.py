@@ -210,8 +210,6 @@ def changepass():
 
 @app.route('/api/getMessages', methods=['GET'])
 def getMesages():
-    # return jsonify([])
-    # print('Hello!')
     messagesArr = database.getmsgs(request.args["user1"], request.args["user2"])
     return jsonify(messagesArr)
 
@@ -252,7 +250,13 @@ def getMessages(id):
         lastMessage = ['', '', '', '-- No message available --']
         msgs = database.getmsgs(database.getuserbyid(id)[2], match[2])
         if (len(msgs) > 0):
-            lastMessage = msgs[0]
+            highestNum = msgs[0][0]
+            highestIndex = 0
+            for z in range(len(msgs)):
+                if (msgs[z][0] > highestNum):
+                    highestIndex = z
+                    highestNum = msgs[z][0]
+            lastMessage = msgs[highestIndex]
         matches[i] = [match[1], match[2], matches[i], lastMessage]
     return jsonify(matches)
 
