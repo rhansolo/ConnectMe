@@ -34,8 +34,7 @@
 		    return response.json();
 		  })
 		  .then(function(myJson) {
-		  	console.log('myJson')
-		  	console.log(myJson)
+		  	myJson = myJson.reverse()
 		  	myJson.forEach(message => {
 		  		if (message[1] == myEmail) {
 		  			createMessageHTML(message[3])

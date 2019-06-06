@@ -2,7 +2,6 @@ import os
 import random
 from random import randint
 import datetime
-# import database as database
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
 from util import database
@@ -135,9 +134,9 @@ def send_js(path):
 
 @app.route("/api/<id>/getNextProfile")
 def summary(id):
-    # username = database.getuserbyid(id)[2]
-    # print(username)
-    randomProfile = database.fetchrand(id)
+    username = database.getuserbyid(id)[2]
+    print(username)
+    randomProfile = database.fetchrand(username)
     profile = {
 	    "id": randomProfile[0],
         "name": randomProfile[1],
@@ -251,7 +250,7 @@ def getMessages(id):
         lastMessage = ['', '', '', '-- No message available --']
         msgs = database.getmsgs(database.getuserbyid(id)[2], match[2])
         if (len(msgs) > 0):
-            lastMessage = msgs[-1]
+            lastMessage = msgs[0]
         matches[i] = [match[1], match[2], matches[i], lastMessage]
     return jsonify(matches)
 

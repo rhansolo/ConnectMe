@@ -1,6 +1,6 @@
 import sqlite3
 import datetime
-
+import random
 dbfile = "data/userdata.db"
 def createdb():
     db = initdb()
@@ -140,10 +140,10 @@ def addmsg(txt, user1, user2):
 
     if len(msgs) == 0:
         c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, txt, str(datetime.datetime.now())))
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, txt, str(datetime.datetime.now())))
     else:
         c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(msgs), user1, user2, txt, str(datetime.datetime.now())))
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(msgs), user1, user2, txt, str(datetime.datetime.now())))
+    c.execute("SELECT * FROM msgs")
+    msgs = c.fetchall()
 
     db.commit()
     db.close()
