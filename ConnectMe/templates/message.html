@@ -166,8 +166,10 @@
 				}
 				messagesDiv.innerHTML += `
 			<div class="container darker">
+				<span class="fullheight">
 				  <img src=${myProfileUrl} alt="Avatar" class="right">
-				  <p>${message}</p>
+				</span>
+				  <p class="msg">${message}</p>
 				  <p class="date">${date}</p>
 				</div>
 			`
@@ -180,7 +182,9 @@
 					convoProfileUrl = '../file/pictures/default.jpeg'
 				}
 				messagesDiv.innerHTML += `<div class="container">
+			<span class="fullheight">
 		  <img src=${convoProfileUrl} alt="Avatar">
+		  </span>
 		  <p>${message}</p>
 		<p class="date">${date}</p>
 		</div>`

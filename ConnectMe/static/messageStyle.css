@@ -5,12 +5,13 @@
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
+  word-wrap: break-word;
 }
 
 /* Darker chat container */
-.darker {
-  border-color: #ccc;
-  background-color: #ddd;
+.container .darker {
+  border-color: #867e7e;
+  background-color: #d4d4d4;
 }
 
 /* Clear floats */
@@ -57,3 +58,4 @@
   float: left;
   width: 74%;
 }
+
