@@ -73,6 +73,9 @@ const messageList = document.getElementById('list')
       if (response.status !== 404) {
         imageUrl = `./file/pictures/${email.replace('@', '-').replace('.', '-')}.jpeg`
       }
+      if (lastMessage.length > 80) {
+        lastMessage = lastMessage.substring(0, 79) + ' ...'
+      }
       messageList.innerHTML += `<a href="./message/${num}">
               <div class="card">
                 <div class="card-body">
