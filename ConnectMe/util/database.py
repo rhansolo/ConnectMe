@@ -89,14 +89,14 @@ def fetchrand(user):
     i = 0
     while i < len(pf):
         if pf[i][0] in swipes:
-            pf.remove(i)
+            pf = pf[:i] + pf[i+1:]
             i -= 1
         i += 1
     db.close()
     if len(pf) > 0:
         return pf[0]
     else:
-        return pf[0]
+        return None
 def getuser(user):
     db = initdb()
     c = db.cursor()

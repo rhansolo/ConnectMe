@@ -87,6 +87,9 @@ const showMatch = () => {
   setTimeout(() => {matchText.style.display = 'none';}, 500);
 }
 
+const noMoreSwipeText = document.getElementById('noMoreSwipeText')
+noMoreSwipeText.style.display = 'none'
+
 const swipeRight = () => {
   const url = `./right?user1=${userId}&user2=${activeProfileId}`
   fetch(url)
@@ -165,47 +168,49 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
     return response.json();
   })
   .then(function(myJson) {
-    // console.log(JSON.stringify(myJson));
-    // console.log(myJson.id)
-    activeProfileId = myJson.id;
-    // console.log(activeProfileId)
     var spinner = document.getElementById('spinner');
     spinner.remove()
-    let imageUrl = "./file/pictures/default.jpeg"
-    fetch(`./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg`)
-    .then((response) => {
-      if (response.status !== 404) {
-        imageUrl = `./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg`
-      } 
+    if (!myJson) {
+      console.log('NO PROFILE')
+      noMoreSwipeText.style.display = 'block';
+    } else {
+       activeProfileId = myJson.id;
+        let imageUrl = "./file/pictures/default.jpeg"
+        fetch(`./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg`)
+        .then((response) => {
+          if (response.status !== 404) {
+            imageUrl = `./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg`
+          }
 
-            document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
-   <div class="tinder--card">
-      <div class="thumb">
-        <img src="${imageUrl}" style="width:200;height:200;"}>
-      </div>
-      <h3 class="name">${myJson.name}</h3>
-      <p>${myJson.status}</p>
-      <p>Looking for: ${myJson.lookingFor}</p>
-      <div class="left info">
-        <p><strong>Skills</strong></p>
-        ${generatePList(myJson.skills)}
-      </div>
-      <div class="right info">
-        <p><strong>Interested In</strong></p>
-        ${generatePList(myJson.interests)}
-      </div>
-      <div class="description">
-        <p>${myJson.description}</p>
-      </div>
-      <div class="socials">
-        ${generateSocials(myJson.socials)}
-      </div>
-    </div>`)
-   allCards = document.querySelectorAll('.tinder--card');
-   initListeners()
-  initCards();
-    })
-
+          document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
+         <div class="tinder--card">
+            <div class="thumb">
+              <img src="${imageUrl}" style="width:200;height:200;"}>
+            </div>
+            <h3 class="name">${myJson.name}</h3>
+            <p>${myJson.status}</p>
+            <p>Looking for: ${myJson.lookingFor}</p>
+            <div class="left info">
+              <p><strong>Skills</strong></p>
+              ${generatePList(myJson.skills)}
+            </div>
+            <div class="right info">
+              <p><strong>Interested In</strong></p>
+              ${generatePList(myJson.interests)}
+            </div>
+            <div class="description">
+              <p>${myJson.description}</p>
+            </div>
+            <div class="socials">
+              ${generateSocials(myJson.socials)}
+            </div>
+          </div>`)
+         allCards = document.querySelectorAll('.tinder--card');
+         initListeners()
+        initCards();
+          })
+    }
+   
 });
 }
 

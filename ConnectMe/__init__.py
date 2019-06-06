@@ -134,24 +134,26 @@ def send_js(path):
 
 @app.route("/api/<id>/getNextProfile")
 def summary(id):
-    username = database.getuserbyid(id)[2]
-    print(username)
-    randomProfile = database.fetchrand(username)
-    profile = {
-	    "id": randomProfile[0],
-        "name": randomProfile[1],
-        "email": randomProfile[2],
-        "description": randomProfile[4],
-        "status": randomProfile[5],
-        "lookingFor": 'Mentor',
-        "skills": [convert(randomProfile[7])],
-        "interests": convertList(randomProfile[6].split(",")),
-        "socials": {
-            "facebook": 'https://google.com',
-            "linkedin": 'https://google.com',
-            "twitter": 'https://google.com',
+    # username = database.getuserbyid(id)[2]
+    # print(username)
+    randomProfile = database.fetchrand(id)
+    profile = None;
+    if (randomProfile):
+        profile = {
+    	    "id": randomProfile[0],
+            "name": randomProfile[1],
+            "email": randomProfile[2],
+            "description": randomProfile[4],
+            "status": randomProfile[5],
+            "lookingFor": 'Mentor',
+            "skills": [convert(randomProfile[7])],
+            "interests": convertList(randomProfile[6].split(",")),
+            "socials": {
+                "facebook": 'https://google.com',
+                "linkedin": 'https://google.com',
+                "twitter": 'https://google.com',
+            }
         }
-    }
     print(profile)
     return jsonify(profile)
 # send it back as json
