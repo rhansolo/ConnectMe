@@ -23,6 +23,11 @@ hr {
   /*border: px solid #6c8082;*/
 }
 
+.smally {
+  width: 40%;
+  margin-left: 20px;
+}
+
 li {
   margin: 0;
 }

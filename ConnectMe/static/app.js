@@ -103,7 +103,6 @@ const swipeRight = () => {
     })
     if (match) {
       addMatchText()
-      setTimeout(() => {removeMatchText(); getNextProfile();}, 500)
     } else {
       getNextProfile();
     }
@@ -112,7 +111,20 @@ const swipeRight = () => {
 
 const texty = document.getElementById('texty')
 const addMatchText = () => {
-  texty.innerHTML = ` <div class="centered" id="matchText"><h1>It's a match!</h1></div>`
+  texty.innerHTML = ` <div class="centered" id="matchText">
+  <h1>It's a match!</h1>
+  <button class="form-control btn my-2 my-sm-0 smally" id="sendMessage">Send a message</button>
+  <button class="form-control btn my-2 my-sm-0 smally" id="ok">Ok</button>
+  </div>`
+
+  document.getElementById('sendMessage').addEventListener('click', () => {
+    window.location = `../message/${activeProfileId}`
+  })
+
+  document.getElementById('ok').addEventListener('click', () => {
+    removeMatchText(); 
+    getNextProfile();
+  })  
 }
 
 const removeMatchText = () => {
