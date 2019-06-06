@@ -136,9 +136,11 @@ def logout():
 def send_js(path):
     return send_from_directory('static', path)
 
-@app.route("/api/getNextProfile")
-def summary():
-    randomProfile = database.fetchrand(user)
+@app.route("/api/<id>/getNextProfile")
+def summary(id):
+    username = database.getuserbyid(id)[2]
+    print(username)
+    randomProfile = database.fetchrand(username)
     profile = {
 	    "id": randomProfile[0],
         "name": randomProfile[1],
@@ -161,9 +163,16 @@ users = {}
 @app.route("/messages")
 def messages():
     if 'user' in session:
+        userId = database.getuserid(user)[0]
+        return render_template('messagesList.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId)
+
+@app.route("/message/<id>")
+def messageOne(id):
+    if 'user' in session:
         cryptoNum = random.randint(1,100000)
+        userId = database.getuserid(user)[0]
         users[cryptoNum] = session['user']
-        return render_template('messagesList.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
+        return render_template('message.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId, convoNum=id, myEmail=user, convoEmail=database.getuserbyid(int(id))[2])
 
 @app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
 def message(num, message, time):
@@ -202,6 +211,8 @@ def changepass():
 
 @app.route('/api/getMessages', methods=['GET'])
 def getMesages():
+    # return jsonify([])
+    # print('Hello!')
     messagesArr = database.getmsgs(request.args["user1"], request.args["user2"])
     return jsonify(messagesArr)
 
@@ -220,6 +231,36 @@ def sl():
     swipes = database.getallswipes()
     print(swipes)
     return jsonify(swipes)
+
+@app.route('/sendMessage', methods=['GET'])
+def sendMessage():
+    database.addmsg(request.args['txt'], request.args['user1'], request.args['user2'])
+    messagesArr = database.getmsgs(request.args["user1"], request.args["user2"])
+    return jsonify(messagesArr)
+
+@app.route('/getMessages/<id>', methods=['GET'])
+def getMessages(id):
+    swipes = database.getallswipes()
+    matches = []
+    for i in range(len(swipes)):
+        if (swipes[i][2] in matches):
+            continue;
+        if (swipes[i][0] > 0 and swipes[i][1] == int(id) and checkMatch(swipes, swipes[i][2], int(id))):
+            matches.append(swipes[i][2])
+    for i in range(len(matches)):
+        match = database.getuserbyid(matches[i])
+        lastMessage = ['', '', '', '-- No message available --']
+        msgs = database.getmsgs(database.getuserbyid(id)[2], match[2])
+        if (len(msgs) > 0):
+            lastMessage = msgs[-1]
+        matches[i] = [match[1], match[2], matches[i], lastMessage]
+    return jsonify(matches)
+
+def checkMatch(swipes, id1, id2):
+    for i in range(len(swipes)):
+        if (swipes[i][0] > 0 and swipes[i][1] == id1 and swipes[i][2] == id2):
+            return True
+    return False
 
 if __name__ == '__main__':
     app.debug = True

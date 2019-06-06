@@ -157,7 +157,7 @@ var loveListener = createButtonListener(true);
 let activeProfileId = -1;
 function getNextProfile () {
 document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class="spinner" id="spinner"></div>`)
-  fetch('./api/getNextProfile')
+  fetch(`./api/${userId}/getNextProfile`)
   .then(function(response) {
     console.log(response)
     return response.json();

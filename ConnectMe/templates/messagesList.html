@@ -49,51 +49,46 @@
 			<h2 class="center">Messages</h2>
 			<br>
 		  <div class="row">
-		    <div class="col-sm">
-		    		<a href="">
-			    		<div class="card">
-							  <div class="card-body">
-							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
-							  	<span class="name"><b>Anonymous Anon</b></span>
-							  	<span class="lastMessage">Hey whats up?</span>
-							  </div>
-						</div>
-		    		</a>
-
-		    		<a href="">
-			    		<div class="card">
-							  <div class="card-body">
-							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
-							  	<span class="name"><b>Anonymous Anon</b></span>
-							  	<span class="lastMessage">Hey whats up?</span>
-							  </div>
-						</div>
-		    		</a>
-
-		    		<a href="">
-			    		<div class="card">
-							  <div class="card-body">
-							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
-							  	<span class="name"><b>Anonymous Anon</b></span>
-							  	<span class="lastMessage">Hey whats up?</span>
-							  </div>
-						</div>
-		    		</a>
-
-		    		<a href="">
-			    		<div class="card">
-							  <div class="card-body">
-							    <img class="profilePictures" src="https://png.pngtree.com/svg/20161027/631929649c.svg" width="50px">
-							  	<span class="name"><b>Anonymous Anon</b></span>
-							  	<span class="lastMessage">Hey whats up?</span>
-							  </div>
-						</div>
-		    		</a>
-
+		    <div class="col-sm" id="list">
+		    		
 		    </div>
 		  </div>
 			</div>
 	</div>
+<script>
+	const myId = {{id}}
+</script>
+<script>
+	const createMessageCard = (name, lastMessage, email, num) => {
+	return `<a href="./message/${num}">
+			    		<div class="card">
+							  <div class="card-body">
 
+							    <img class="profilePictures" src="./file/pictures/${email.replace('@', '-').replace('.', '-')}.jpeg" width="50px">
+							  	<span class="name"><b>${name}</b> (${email})</span>							  	
+							  	<span class="lastMessage">${lastMessage}</span>
+							  </div>
+						</div>
+		    		</a>`
+}
+
+const messageList = document.getElementById('list')
+
+fetch(`./getMessages/${myId}`)
+  .then(function(response) {
+    console.log(response)
+    return response.json();
+  })
+  .then(function(myJson) {
+  	console.log(myJson)
+  	myJson.forEach(person => {
+  		const html = createMessageCard(person[0], person[3][3], person[1], person[2])
+  		messageList.innerHTML += html
+  	})
+  })
+
+
+
+</script>
 </body>
 </html>

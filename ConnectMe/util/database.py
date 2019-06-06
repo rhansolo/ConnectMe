@@ -1,4 +1,5 @@
 import sqlite3
+import datetime
 
 dbfile = "data/userdata.db"
 def createdb():
@@ -138,6 +139,17 @@ def getuser(user):
     db.close()
     return pf
 
+def getuserbyid(id):
+    db = initdb()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users WHERE id = ?;", (id, ))
+
+    pf = c.fetchone()
+
+    db.close()
+    return pf
+
 def edituser(name, user, pos, maj, intrsts, bio, olduser):
     db = initdb()
     c = db.cursor()
@@ -172,9 +184,9 @@ def addmsg(txt, user1, user2):
     msgs = c.fetchall()
 
     if len(msgs) == 0:
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, content, str(datetime.now())))
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, txt, str(datetime.datetime.now())))
     else:
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(usrs), user1, user2, content, str(datetime.now())))
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(msgs), user1, user2, txt, str(datetime.datetime.now())))
 
     db.commit()
     db.close()
