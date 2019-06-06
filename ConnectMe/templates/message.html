@@ -18,7 +18,7 @@
     </script>
 	<script>
 		const myProfileUrl = `../file/pictures/${myEmail.replace('@', '-').replace('.', '-')}.jpeg`
-		const convoProfileUrl = `../file/pictures/${convoEmail.replace('@', '-').replace('.', '-')}.jpeg`
+		let convoProfileUrl = `../file/pictures/${convoEmail.replace('@', '-').replace('.', '-')}.jpeg`
 
 		const sendButton = document.getElementById('sendButton')
 		// const num = document.getElementById('num').innerHTML
@@ -27,21 +27,7 @@
 		const messageInput = document.getElementById('messageBox')
 		const now = new Date()
 		let length = 0;
-		const update = () => {
-			fetch('../api/getMessages')
-		  .then(function(response) {
-		    return response.json();
-		  })
-		  .then(function(myJson) {
-		  	if (myJson.length > length) {
-		  		console.log(myJson)
-		  		console.log(num)
-		  		messagesDiv.innerHTML += friendMessage(myJson[myJson.length - 1].message)
-		  		length++
-		  	}
-		  });
-		  // setTimeout(update, 1000);
-		}
+
 		console.log(`../api/getMessages?user1=${myEmail}&user2=${convoEmail}`)
 		fetch(`../api/getMessages?user1=${myEmail}&user2=${convoEmail}`)
 		  .then(function(response) {
@@ -52,9 +38,9 @@
 		  	console.log(myJson)
 		  	myJson.forEach(message => {
 		  		if (message[1] == myEmail) {
-		  			messagesDiv.innerHTML += createMessageHTML(message[3])
+		  			createMessageHTML(message[3])
 		  		} else {
-		  			messagesDiv.innerHTML += friendMessage(message[3])
+		  			friendMessage(message[3])
 		  		}
 		  	})
 		 });
@@ -70,19 +56,29 @@
 		})
 
 		const createMessageHTML = (message) => {
-			return `
+			fetch(convoProfileUrl).then((response) => {
+				if (response.status == 200) {
+					convoProfileUrl = '../file/pictures/default.jpeg'
+				}
+				messagesDiv.innerHTML += `
 			<div class="container darker">
 				  <img src=${myProfileUrl} alt="Avatar" class="right">
 				  <p>${message}</p>
 				</div>
-		`
+			`
+			})
 		}
 
 		const friendMessage = (message) => {
-			return `<div class="container">
+			fetch(convoProfileUrl).then((response) => {
+				if (response.status == 404) {
+					convoProfileUrl = '../file/pictures/default.jpeg'
+				}
+				messagesDiv.innerHTML += `<div class="container">
 		  <img src=${convoProfileUrl} alt="Avatar">
 		  <p>${message}</p>
 		</div>`
+			})
 		}
 	</script>       
 	</body>

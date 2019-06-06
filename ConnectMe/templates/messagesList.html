@@ -59,31 +59,37 @@
 	const myId = {{id}}
 </script>
 <script>
-	const createMessageCard = (name, lastMessage, email, num) => {
-	return `<a href="./message/${num}">
-			    		<div class="card">
-							  <div class="card-body">
+const messageList = document.getElementById('list')
+  const createMessageCard = async (name, lastMessage, email, num) => {
+    let imageUrl = "./file/pictures/default.jpeg"
+    fetch(`./file/pictures/${email.replace('@', '-').replace('.', '-')}.jpeg`)
+    .then((response) => {
+      console.log('here')
+      if (response.status !== 404) {
+        imageUrl = `./file/pictures/${email.replace('@', '-').replace('.', '-')}.jpeg`
+      }
+      messageList.innerHTML += `<a href="./message/${num}">
+              <div class="card">
+                <div class="card-body">
 
-							    <img class="profilePictures" src="./file/pictures/${email.replace('@', '-').replace('.', '-')}.jpeg" width="50px">
-							  	<span class="name"><b>${name}</b> (${email})</span>							  	
-							  	<span class="lastMessage">${lastMessage}</span>
-							  </div>
-						</div>
-		    		</a>`
+                  <img class="profilePictures" src="${imageUrl}" width="50px">
+                  <span class="name"><b>${name}</b> (${email})</span>                 
+                  <span class="lastMessage">${lastMessage}</span>
+                </div>
+            </div>
+            </a>`
+    })
 }
 
-const messageList = document.getElementById('list')
 
 fetch(`./getMessages/${myId}`)
   .then(function(response) {
     console.log(response)
     return response.json();
   })
-  .then(function(myJson) {
-  	console.log(myJson)
-  	myJson.forEach(person => {
-  		const html = createMessageCard(person[0], person[3][3], person[1], person[2])
-  		messageList.innerHTML += html
+  .then(async (myJson)  => {
+  	myJson.forEach( async (person) => {
+  		createMessageCard(person[0], person[3][3], person[1], person[2])
   	})
   })
 

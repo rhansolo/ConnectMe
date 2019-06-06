@@ -139,11 +139,13 @@ function createButtonListener(love) {
     if (love) {
       // console.log(card.innerHTML)
       card.style.transform = 'translate(' + moveOutWidth + 'px, -100px) rotate(-30deg)';
+      swipeRight()
     } else {
       // console.error(card.innerHTML)
       card.style.transform = 'translate(-' + moveOutWidth + 'px, -100px) rotate(30deg)';
+      swipeLeft()
     }
-	   getNextProfile()
+	   // getNextProfile()
     //initCards();
 
     event.preventDefault();
@@ -169,10 +171,17 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
     // console.log(activeProfileId)
     var spinner = document.getElementById('spinner');
     spinner.remove()
-    document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
+    let imageUrl = "./file/pictures/default.jpeg"
+    fetch(`./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg`)
+    .then((response) => {
+      if (response.status !== 404) {
+        imageUrl = `./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg`
+      } 
+
+            document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
    <div class="tinder--card">
       <div class="thumb">
-        <img src="./file/pictures/${myJson.email.replace('@', '-').replace('.', '-')}.jpeg" style="width:200;height:200;"}>
+        <img src="${imageUrl}" style="width:200;height:200;"}>
       </div>
       <h3 class="name">${myJson.name}</h3>
       <p>${myJson.status}</p>
@@ -195,6 +204,8 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
    allCards = document.querySelectorAll('.tinder--card');
    initListeners()
   initCards();
+    })
+
 });
 }
 
