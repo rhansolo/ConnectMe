@@ -47,7 +47,7 @@
 		// update()
 
 		sendButton.addEventListener('click', () => {
-			messagesDiv.innerHTML += createMessageHTML(messageInput.value)
+			createMessageHTML(messageInput.value)
 			length++;
 			fetch(`../sendMessage?txt=${messageInput.value}&user1=${myEmail}&user2=${convoEmail}`).then((res) => res.json()).then(json => {
 				console.log(json)

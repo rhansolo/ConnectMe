@@ -139,10 +139,10 @@ def addmsg(txt, user1, user2):
     msgs = c.fetchall()
 
     if len(msgs) == 0:
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, content, str(datetime.now())))
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, txt, str(datetime.datetime.now())))
         c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (0, user1, user2, txt, str(datetime.datetime.now())))
     else:
-        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(usrs), user1, user2, content, str(datetime.now())))
+        c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(msgs), user1, user2, txt, str(datetime.datetime.now())))
         c.execute("INSERT INTO msgs VALUES(?,?,?,?,?)", (len(msgs), user1, user2, txt, str(datetime.datetime.now())))
 
     db.commit()

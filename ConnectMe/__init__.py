@@ -2,10 +2,10 @@ import os
 import random
 from random import randint
 import datetime
-# import database as database
+import database as database
 from flask import Flask, redirect, url_for, render_template, session, request, flash, get_flashed_messages, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
-from util import database
+# from util import database
 from os.path import join, dirname, realpath
 
 UPLOAD_FOLDER = join(dirname(realpath(__file__)), './static/pictures')
@@ -135,9 +135,9 @@ def send_js(path):
 
 @app.route("/api/<id>/getNextProfile")
 def summary(id):
-    username = database.getuserbyid(id)[2]
-    print(username)
-    randomProfile = database.fetchrand(username)
+    # username = database.getuserbyid(id)[2]
+    # print(username)
+    randomProfile = database.fetchrand(id)
     profile = {
 	    "id": randomProfile[0],
         "name": randomProfile[1],
@@ -153,6 +153,7 @@ def summary(id):
             "twitter": 'https://google.com',
         }
     }
+    print(profile)
     return jsonify(profile)
 # send it back as json
 messagesArr = []
@@ -231,6 +232,7 @@ def sl():
 
 @app.route('/sendMessage', methods=['GET'])
 def sendMessage():
+    print('hello')
     database.addmsg(request.args['txt'], request.args['user1'], request.args['user2'])
     messagesArr = database.getmsgs(request.args["user1"], request.args["user2"])
     return jsonify(messagesArr)
