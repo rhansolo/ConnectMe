@@ -13,7 +13,7 @@
 			#messages {
 				margin-top: 60px;
 				height:80%;
-  				overflow-y: scroll;
+  				overflow:auto;
 			}
 			#who {
 				text-align: center;
@@ -106,6 +106,7 @@
 		  			friendMessage(message[3], message[4].split('.')[0])
 		  		}
 		  	})
+		setInterval(updateScroll, 1)
 		 });
 		// update()
 
@@ -122,6 +123,7 @@
 				const message = json[json.length - 1]
 				createMessageHTML(message[3], message[4].split('.')[0])
 				messageInput.value = ""
+		setInterval(updateScroll, 1)
 			})
 		})
 
@@ -172,6 +174,10 @@
 		</div>`
 			})
 		}
+
+	function updateScroll(){
+	    document.getElementById("messages").scrollTop = 10000000000000000;
+	}
 	</script>       
 	</body>
 	
