@@ -125,7 +125,7 @@
 			  		if (a[0] < b[0]) {
 			  			return -1
 			  		} else {
-			  			1
+			  			return 1
 			  		}
 		  		})
 				const message = json[json.length - 1]
@@ -181,7 +181,7 @@
 				if (response.status == 404) {
 					convoProfileUrl = '../file/pictures/default.jpeg'
 				}
-				messagesDiv.innerHTML += `<div class="container">
+				messagesDiv.innerHTML += `<div class="container lighter">
 			<span class="fullheight">
 		  <img src=${convoProfileUrl} alt="Avatar">
 		  </span>
