@@ -208,23 +208,21 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
             <div class="thumb">
               <img src="${imageUrl}" style="width:200;height:200;"}>
             </div>
-            <h3 class="name">${myJson.name}</h3>
+            <h3 class="name interested">${myJson.name}</h3>
             <p>${myJson.status}</p>
-            <p>Looking for: ${myJson.lookingFor}</p>
-            <div class="left info">
-              <p><strong>Skills</strong></p>
-              ${generatePList(myJson.skills)}
-            </div>
-            <div class="right info">
-              <p><strong>Interested In</strong></p>
+            <hr>
+            <p>Major: ${myJson.skills[0]}</p>
+            <hr>
+            <div class="info">
+              <p class="interested"><strong>Interested In</strong></p>
               ${generatePList(myJson.interests)}
             </div>
+            <hr>
             <div class="description">
+              <p class="interested"><b>About</b></p>
               <p>${myJson.description}</p>
             </div>
-            <div class="socials">
-              ${generateSocials(myJson.socials)}
-            </div>
+            <hr>
           </div>`)
          allCards = document.querySelectorAll('.tinder--card');
          initListeners()
@@ -238,7 +236,7 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
 function generatePList (arr) {
   let html = ''
   arr.forEach(el => {
-    html += `<p>-${el}</p>`
+    html += `<li>${el}</li>`
   })
   return html
 }
@@ -256,10 +254,6 @@ function generateSocials (socials) {
   }
   return html
 }
-
-document.getElementById('message').addEventListener('click', () => {
-  window.location.href = "./messages";
-})
 
 getNextProfile()
 nope.addEventListener('click', nopeListener);

@@ -1,22 +1,77 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="../file/messageStyle.css">
+		 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="../file/css/colorscheme.css">
+  <link rel="stylesheet" href="../file/css/normalize.min.css">
+  <link rel='stylesheet' href='../file/css/font-awesome.css'>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap" rel="stylesheet">
+		<style type="text/css">
+			.date {
+				color: #818192;
+			}
+			#messages {
+				margin-top: 60px;
+			}
+			#who {
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body>
-	<div id="messages">
+		<div class="container">
+			<nav class="navbar fixed-top navbar-dark flex-row">
+      <!-- The navbar present at the top of our demo page -->
+        <a class="navbar-brand" href="/"><img height="40px" src="../file/pictures/logo.png"></a>
+        {% block login %}
+          {% if not crtprof %}
+            {% if not logged_in %}
+                <form class="form-inline my-2 my-lg-0" action="/register">
+                       <button class="form-control btn my-2 my-sm-0" type="submit">Register</a>
+                </form>
+            {% endif %}
+            {% if logged_in %}
+              <div class="row">
+                 <div class="col">
+                  <form class="form-inline my-2 my-lg-0" action="/messages">
+                         <button class="form-control btn my-2 my-sm-0" type="submit">Messages <i class="fa fa-comments"></i></a>
+                  </form>
+                </div>
+                <div class="col">
+                  <form class="form-inline my-2 my-lg-0" action="/profile">
+                         <button class="form-control btn my-2 my-sm-0" type="submit">{{ username }}  <i class="fa fa-user"></i></a>
+                  </form>
+                </div>
+                <div class="col">
+                  <form class="form-inline my-2 my-lg-0" action="/logout">
+                         <button class="form-control btn my-2 my-sm-0" type="submit">Logout <i class="fa fa-sign-out"></i></a>
+                  </form>
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% endblock %}
+    </nav>
+    		<div id="messages">
+			<h2 id="who"></h2>
             </div>
 		<div class="container">
-			<input id="messageBox" type="text"/>
-			<button type="submit" id="sendButton">Send</button>
+			<input class="form-control" id="messageBox" type="text" placeholder="Message...">
+			<button class="form-control btn my-2 my-sm-0" type="submit" id="sendButton">Send</button>
 		</div>
+
+		</div>
+
     <script type="text/javascript">
     	const num = {{ num }}
     	const convoNum = {{ convoNum }}
     	const myNum = {{id}}
+    	const convouser = '{{convouser}}'
     	const myEmail = '{{myEmail}}'
     	const convoEmail = '{{convoEmail}}'
     </script>
 	<script>
+		document.getElementById('who').innerHTML = `${convouser} (${convoEmail})`
 		const myProfileUrl = `../file/pictures/${myEmail.replace('@', '-').replace('.', '-')}.jpeg`
 		let convoProfileUrl = `../file/pictures/${convoEmail.replace('@', '-').replace('.', '-')}.jpeg`
 
@@ -44,38 +99,66 @@
 		  	console.log(myJson)
 		  	myJson.forEach(message => {
 		  		if (message[1] == myEmail) {
-		  			createMessageHTML(message[3])
+		  			createMessageHTML(message[3], message[4].split('.')[0])
 		  		} else {
-		  			friendMessage(message[3])
+		  			friendMessage(message[3], message[4].split('.')[0])
 		  		}
 		  	})
 		 });
 		// update()
 
 		sendButton.addEventListener('click', () => {
-			createMessageHTML(messageInput.value)
 			length++;
 			fetch(`../sendMessage?txt=${messageInput.value}&user1=${myEmail}&user2=${convoEmail}`).then((res) => res.json()).then(json => {
-				console.log(json)
+				json = json.sort((a, b) => {
+			  		if (a[0] < b[0]) {
+			  			return -1
+			  		} else {
+			  			1
+			  		}
+		  		})
+				const message = json[json.length - 1]
+				createMessageHTML(message[3], message[4].split('.')[0])
 				messageInput.value = ""
 			})
 		})
 
-		const createMessageHTML = (message) => {
+		messageInput.addEventListener('keyup', () => {
+			if (event.keyCode == 13) {
+				event.preventDefault();
+				length++;
+			fetch(`../sendMessage?txt=${messageInput.value}&user1=${myEmail}&user2=${convoEmail}`).then((res) => res.json()).then(json => {
+				json = json.sort((a, b) => {
+			  		if (a[0] < b[0]) {
+			  			return -1
+			  		} else {
+			  			1
+			  		}
+		  		})
+				const message = json[json.length - 1]
+				createMessageHTML(message[3], message[4].split('.')[0])
+				messageInput.value = ""
+			})
+
+			}
+		})
+
+		const createMessageHTML = (message, date) => {
 			fetch(convoProfileUrl).then((response) => {
-				if (response.status == 200) {
+				if (response.status == 404) {
 					convoProfileUrl = '../file/pictures/default.jpeg'
 				}
 				messagesDiv.innerHTML += `
 			<div class="container darker">
 				  <img src=${myProfileUrl} alt="Avatar" class="right">
 				  <p>${message}</p>
+				  <p class="date">${date}</p>
 				</div>
 			`
 			})
 		}
 
-		const friendMessage = (message) => {
+		const friendMessage = (message, date) => {
 			fetch(convoProfileUrl).then((response) => {
 				if (response.status == 404) {
 					convoProfileUrl = '../file/pictures/default.jpeg'

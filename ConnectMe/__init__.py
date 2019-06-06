@@ -170,8 +170,10 @@ def messageOne(id):
     if 'user' in session:
         cryptoNum = random.randint(1,100000)
         userId = database.getuserid(user)[0]
+        friend = database.getuserbyid(id)
+        print(friend)
         users[cryptoNum] = session['user']
-        return render_template('message.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId, convoNum=id, myEmail=user, convoEmail=database.getuserbyid(int(id))[2])
+        return render_template('message.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId, convouser = friend[1] ,convoNum=id, myEmail=user, convoEmail=database.getuserbyid(int(id))[2])
 
 @app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
 def message(num, message, time):
@@ -231,7 +233,6 @@ def sl():
 
 @app.route('/sendMessage', methods=['GET'])
 def sendMessage():
-    print('hello')
     database.addmsg(request.args['txt'], request.args['user1'], request.args['user2'])
     messagesArr = database.getmsgs(request.args["user1"], request.args["user2"])
     return jsonify(messagesArr)

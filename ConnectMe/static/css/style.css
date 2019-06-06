@@ -19,6 +19,18 @@
   font-size: 40px;
 }
 
+hr {
+  /*border: px solid #6c8082;*/
+}
+
+li {
+  margin: 0;
+}
+
+.interested {
+  margin: 0;
+}
+
 #noMoreSwipeText {
   font-size: 20px;
 }
