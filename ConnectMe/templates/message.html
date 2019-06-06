@@ -79,7 +79,7 @@
     </script>
 	<script>
 		document.getElementById('who').innerHTML = `${convouser} (${convoEmail})`
-		const myProfileUrl = `../file/pictures/${myEmail.replace('@', '-').replace('.', '-')}.jpeg`
+		let myProfileUrl = `../file/pictures/${myEmail.replace('@', '-').replace('.', '-')}.jpeg`
 		let convoProfileUrl = `../file/pictures/${convoEmail.replace('@', '-').replace('.', '-')}.jpeg`
 
 		const sendButton = document.getElementById('sendButton')
@@ -160,9 +160,9 @@
 		})
 
 		const createMessageHTML = (message, date) => {
-			fetch(convoProfileUrl).then((response) => {
+			fetch(myProfileUrl).then((response) => {
 				if (response.status == 404) {
-					convoProfileUrl = '../file/pictures/default.jpeg'
+					myProfileUrl = '../file/pictures/default.jpeg'
 				}
 				messagesDiv.innerHTML += `
 			<div class="container darker">
