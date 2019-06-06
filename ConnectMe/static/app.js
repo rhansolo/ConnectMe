@@ -83,7 +83,7 @@ const swipeLeft = () => {
 // matchText.style.display = 'none';
 
 const showMatch = () => {
-  matchText.style.display = 'block'; 
+  matchText.style.display = 'block';
   setTimeout(() => {matchText.style.display = 'none';}, 500);
 }
 
@@ -122,9 +122,9 @@ const addMatchText = () => {
   })
 
   document.getElementById('ok').addEventListener('click', () => {
-    removeMatchText(); 
+    removeMatchText();
     getNextProfile();
-  })  
+  })
 }
 
 const removeMatchText = () => {
@@ -133,7 +133,7 @@ const removeMatchText = () => {
 }
 
 const addNoMoreSwipeText = () => {
-  texty.innerHTML = `<div class="centered" id="noMoreSwipeText"><h1>There are no more users for you to swipe on</h1></div>`
+  texty.innerHTML = `<div class="centered" id="noMoreSwipeText"><br><h1 style="text-align:center;">There are no more users for you to swipe on.</h1><br><h1 style="text-align:center;">Check back later!</h1></div>`
 }
 
 const removeNoMoreSwipeText = () => {
@@ -241,7 +241,7 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
         initCards();
           })
     }
-   
+
 });
 }
 

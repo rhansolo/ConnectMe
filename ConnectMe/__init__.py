@@ -198,7 +198,11 @@ def editprof():
             filename = secure_filename(file.filename)
             filename = user.replace('.', '-').replace('@', '-') + '.jpeg'
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        database.edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], request.form["interests"], request.form["bio"], user)
+        str = ""
+        for i in request.form.getlist("interests"):
+            str += i + ","
+        database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], str[:-1])
+        database.edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], str[:-1], request.form["bio"], user)
         return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
     return redirect(url_for('root'))
 

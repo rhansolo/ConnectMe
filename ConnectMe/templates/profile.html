@@ -1,30 +1,35 @@
 {% extends "templateLog.html" %}
 {% block content %}
-	<div class = "container" style="position: absolute; left: 10%; top: 20%;width: 75%;">
+	<div class = "container" style="position: absolute; left: 10%; top: 10%;width: 75%;">
 		<div class="row">
 	    <div class="col-md-4">
 				<h2 class="pb-2"><b>Profile</b></h2>
+				<b>Upload a new picture</b>
 				<form method="POST" action="/editprofile" id="prof" enctype="multipart/form-data">
 				          <div class="row pb-2">
 				          <div class="col">
 				            <input type="file" name="profile" id="profile">
 				          </div>
 				        </div>
+					<b>Change name</b>
 				  <div class="row pb-2">
 				    <div class="col">
 				      <input class="form-control mr-sm-2" type="text" name="name" placeholder = "Name" value="{{deets[1]}}" required>
 				    </div>
 				  </div>
+					<b>Update your email</b>
 				  <div class="row pb-2">
 				    <div class="col">
 				      <input class="form-control mr-sm-2" type="text" name="email" placeholder = "Email" value="{{deets[2]}}" required>
 				    </div>
 				  </div>
+					<b>Update your position</b>
 				  <div class="row pb-2">
 	          <div class="col">
 	            <input class="form-control mr-sm-2" name="pos" type="text" placeholder="Position" value="{{deets[5]}}" required>
 	          </div>
 	        </div>
+					<b>Change major</b>
 	        <div class="row pb-2">
 	          <div class="col">
 	            <select class="form-control" name="major" required>
@@ -41,22 +46,22 @@
 	            </select>
 	          </div>
 	        </div>
-	        <div class="row pb-2">
-	          <div class="col">
-	            <select class="form-control" name="interests" required>
-	              <option {% if deets[6] == 'cs' %}selected{% endif %} value="cs">Computer Science</option>
-	              <option {% if deets[6] == 'bio' %}selected{% endif %} value="bio">Biology</option>
-	              <option {% if deets[6] == 'phy' %}selected{% endif %} value="phy">Physics</option>
-	              <option {% if deets[6] == 'chem' %}selected{% endif %} value="chem">Chemistry</option>
-	              <option {% if deets[6] == 'eng' %}selected{% endif %} value="eng">Engineering</option>
-	              <option {% if deets[6] == 'arch' %}selected{% endif %} value="arch">Architecture</option>
-	              <option {% if deets[6] == 'lang' %}selected{% endif %} value="lang">Language Arts</option>
-	              <option {% if deets[6] == 'art' %}selected{% endif %} value="art">Arts</option>
-	              <option {% if deets[6] == 'hist' %}selected{% endif %} value="hist">History</option>
-	              <option {% if deets[6] == 'ed' %}selected{% endif %} value="ed">Education</option>
-	            </select>
-	          </div>
-	        </div>
+					<b>Update interests</b>
+					<div class="row pb-2">
+            <div class="col" >
+                <input type = "checkbox" name="interests" value="cs">Computer Science<br>
+                <input type = "checkbox"  name="interests" value="bio">Biology<br>
+                <input type = "checkbox"  name="interests" value="phy">Physics<br>
+                <input type = "checkbox"  name="interests" value="chem">Chemistry<br>
+                <input type = "checkbox"  name="interests" value="eng">Engineering<br>
+                <input type = "checkbox"  name="interests" value="arch">Architecture<br>
+                <input type = "checkbox"  name="interests" value="lang">Language Arts<br>
+                <input type = "checkbox"  name="interests" value="art">Arts<br>
+                <input type = "checkbox"  name="interests" value="hist">History<br>
+                <input type = "checkbox"  name="interests" value="ed">Education<br>
+            </div>
+          </div>
+					<b>Update your bio</b>
 	        <div class="row pb-4">
 	          <div class="col">
 	            <textarea class="form-control" name="bio" form="prof" rows="4" cols="50" form="prof" required>{{ deets[4] }}</textarea>
