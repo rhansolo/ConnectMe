@@ -11,12 +11,14 @@
 				color: #818192;
 			}
 			#messages {
-				margin-top: 60px;
-				height:80%;
+				height:70%;
   				overflow:auto;
 			}
 			#who {
 				text-align: center;
+			}
+			#margint {
+				margin-top: 60px;
 			}
 		</style>
 	</head>
@@ -54,9 +56,12 @@
           {% endif %}
         {% endblock %}
     </nav>
+    <div id="margint">
+    	<h2 id="who"></h2>
     		<div id="messages">
-			<h2 id="who"></h2>
             </div>
+    </div>
+			
 		<div class="container">
 			<input class="form-control" id="messageBox" type="text" placeholder="Message...">
 			<button class="form-control btn my-2 my-sm-0" type="submit" id="sendButton">Send</button>
@@ -148,6 +153,7 @@
 				const message = json[json.length - 1]
 				createMessageHTML(message[3], message[4].split('.')[0])
 				messageInput.value = ""
+				setTimeout(updateScroll, 100)
 			})
 
 			}
