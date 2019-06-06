@@ -79,16 +79,16 @@ const swipeLeft = () => {
   })
 }
 
-const matchText = document.getElementById('matchText')
-matchText.style.display = 'none';
+// const matchText = document.getElementById('matchText')
+// matchText.style.display = 'none';
 
 const showMatch = () => {
   matchText.style.display = 'block'; 
   setTimeout(() => {matchText.style.display = 'none';}, 500);
 }
 
-const noMoreSwipeText = document.getElementById('noMoreSwipeText')
-noMoreSwipeText.style.display = 'none'
+// const noMoreSwipeText = document.getElementById('noMoreSwipeText')
+// noMoreSwipeText.style.display = 'none'
 
 const swipeRight = () => {
   const url = `./right?user1=${userId}&user2=${activeProfileId}`
@@ -102,13 +102,35 @@ const swipeRight = () => {
       return arr[1] == activeProfileId && arr[2] == userId
     })
     if (match) {
-      showMatch();
-      setTimeout(getNextProfile, 500)
+      addMatchText()
+      setTimeout(() => {removeMatchText(); getNextProfile();}, 500)
     } else {
       getNextProfile();
     }
   })
 }
+
+const texty = document.getElementById('texty')
+const addMatchText = () => {
+  texty.innerHTML = ` <div class="centered" id="matchText"><h1>It's a match!</h1></div>`
+}
+
+const removeMatchText = () => {
+  const elem = document.getElementById('matchText')
+  elem.parentNode.removeChild(elem)
+}
+
+const addNoMoreSwipeText = () => {
+  texty.innerHTML = `<div class="centered" id="noMoreSwipeText"><h1>There are no more users for you to swipe on</h1></div>`
+}
+
+const removeNoMoreSwipeText = () => {
+  const elem = document.getElementById('noMoreSwipeText')
+  elem.parentNode.removeChild(elem)
+}
+
+
+// addMatchText();
 
 function initCards(card, index) {
   var newCards = document.querySelectorAll('.tinder--card:not(.removed)');
@@ -171,8 +193,7 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
     var spinner = document.getElementById('spinner');
     spinner.remove()
     if (!myJson) {
-      console.log('NO PROFILE')
-      noMoreSwipeText.style.display = 'block';
+      addNoMoreSwipeText();
     } else {
        activeProfileId = myJson.id;
         let imageUrl = "./file/pictures/default.jpeg"
