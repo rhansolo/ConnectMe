@@ -106,11 +106,14 @@
 		  			friendMessage(message[3], message[4].split('.')[0])
 		  		}
 		  	})
-		setInterval(updateScroll, 1)
+			setTimeout(updateScroll, 500)
 		 });
 		// update()
 
 		sendButton.addEventListener('click', () => {
+			if (!messageInput.value.trim()) {
+				return;
+			}
 			length++;
 			fetch(`../sendMessage?txt=${messageInput.value}&user1=${myEmail}&user2=${convoEmail}`).then((res) => res.json()).then(json => {
 				json = json.sort((a, b) => {
@@ -123,13 +126,16 @@
 				const message = json[json.length - 1]
 				createMessageHTML(message[3], message[4].split('.')[0])
 				messageInput.value = ""
-		setInterval(updateScroll, 1)
+				setTimeout(updateScroll, 100)
 			})
 		})
 
 		messageInput.addEventListener('keyup', () => {
 			if (event.keyCode == 13) {
 				event.preventDefault();
+				if (!messageInput.value.trim()) {
+				return;
+			}
 				length++;
 			fetch(`../sendMessage?txt=${messageInput.value}&user1=${myEmail}&user2=${convoEmail}`).then((res) => res.json()).then(json => {
 				json = json.sort((a, b) => {
