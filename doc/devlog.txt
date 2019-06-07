@@ -124,3 +124,43 @@ billN -- 2019-05-29 12:50
 --------------------------------------------------------------
 Worked on storing swipes in db.
 ==============================================================
+nahianS -- 2019-05-30 17:35
+--------------------------------------------------------------
+Fixed messaging so that it works but live messaging doesn't work. Messages are stored in DB
+==============================================================
+nahianS, niB -- 2019-06-01 20:10
+--------------------------------------------------------------
+Worked together to store swiping info and displaying profiles that haven't been swiped on yet
+==============================================================
+nahianS -- 2019-06-03 13:45
+--------------------------------------------------------------
+Fixed bunch of bugs relating to fetching profiles and yes/no button pressing as an alterative to swiping
+==============================================================
+nahianS -- 2019-06-05 15:23
+--------------------------------------------------------------
+Website now displays "its a match" if two users have swiped right on each other
+==============================================================
+nahianS -- 2019-06-07 10:02
+--------------------------------------------------------------
+When "its a match" is displayed, two additional buttons are displayed, one of them directly
+allowing the user to chat the the person he/she just matched
+==============================================================
+nahianS -- 2019-06-07 11:13
+--------------------------------------------------------------
+Fixed some messaging css and made long conversations scrollable. Also implemented that
+when a message is sent, the most recent texts are displayed.
+==============================================================
+robinH -- 2019-06-07 15:23
+--------------------------------------------------------------
+Further improved css for messaging and made messaging list scrollable
+==============================================================
+robinH -- 2019-06-08 2:11
+--------------------------------------------------------------
+LARGE AMOUNTS OF COMMITS:
+- edited changing profiles by making it more descriptive
+- added description of our website and how to use it on landing page
+- made pictures rounded when messaging list is displayed
+- polished css on all pages
+- changed session checking + secret_key to work with Apache
+- made local website compatabile with Apache
+==============================================================
