@@ -84,7 +84,7 @@ def fetchrand(user):
     c = db.cursor()
     swipes = getswipes(user)
     swipes = {int(s[2]) for s in swipes}
-    c.execute("SELECT * FROM users WHERE username != ? ORDER BY RANDOM();", (user, ))
+    c.execute("SELECT * FROM users WHERE id != ? ORDER BY RANDOM();", (user, ))
     pf = c.fetchall()
     i = 0
     while i < len(pf):
