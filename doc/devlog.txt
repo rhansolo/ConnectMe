@@ -98,7 +98,7 @@ Changes made:
 	- updated timeline to match what currently has been done and what needs to be accomplished
 	- updated DBSchema to reflect how we are going to store messages sent between users instead of sockets.
 ==============================================================
-nahianS -- 2019-05-20 17:18
+sajedN -- 2019-05-20 17:18
 --------------------------------------------------------------
 Completed mechanism for chat part of application without using sockets but rather using AJAX.
 ==============================================================
@@ -128,7 +128,7 @@ sajedN -- 2019-05-30 17:35
 --------------------------------------------------------------
 Fixed messaging so that it works but live messaging doesn't work. Messages are stored in DB
 ==============================================================
-sajedN, niB -- 2019-06-01 20:10
+sajedN, billN -- 2019-06-01 20:10
 --------------------------------------------------------------
 Worked together to store swiping info and displaying profiles that haven't been swiped on yet
 ==============================================================
@@ -148,12 +148,12 @@ Observed team GPStuy's repo. Here are my observations:
 - Map displayed is a little confusing + shortest path isn't displayed
 - Apache DB doesn't work
 ==============================================================
-sajedN -- 2019-06-06 10:02
+sajedN, jerryY -- 2019-06-06 10:02
 --------------------------------------------------------------
 When "its a match" is displayed, two additional buttons are displayed, one of them directly
 allowing the user to chat the the person he/she just matched
 ==============================================================
-sajedN -- 2019-06-06 11:13
+sajedN, jerryY -- 2019-06-06 11:13
 --------------------------------------------------------------
 Fixed some messaging css and made long conversations scrollable. Also implemented that
 when a message is sent, the most recent texts are displayed.
@@ -172,6 +172,6 @@ LARGE AMOUNTS OF COMMITS:
 - changed session checking + secret_key to work with Apache
 - made local website compatabile with Apache
 ==============================================================
-jerrY -- 2019-06-07 7:00
+jerryY -- 2019-06-07 7:00
 --------------------------------------------------------------
 - fixed formatting issues of devlog 
