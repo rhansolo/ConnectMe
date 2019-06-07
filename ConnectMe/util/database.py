@@ -1,6 +1,13 @@
 import sqlite3
 import datetime
 import random
+
+import os
+
+DIR = os.path.dirname(__file__) or '.'
+DIR += '/../' # points to util, ../ to go back to Flask root
+
+DATABASE_LINK = DIR + "data/userdata.db"
 dbfile = "data/userdata.db"
 def createdb():
     db = initdb()
@@ -31,7 +38,7 @@ def createdb():
     db.commit()
     db.close()
 def initdb():
-    db = sqlite3.connect(dbfile)
+    db = sqlite3.connect(DATABASE_LINK)
     return db
 def checkuser(user):
     db = initdb()
