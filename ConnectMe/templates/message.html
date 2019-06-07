@@ -88,6 +88,7 @@
 		const messagesDiv = document.getElementById('messages')
 		const messageInput = document.getElementById('messageBox')
 		const now = new Date()
+		console.log(now)
 		let length = 0;
 
 		console.log(`../api/getMessages?user1=${myEmail}&user2=${convoEmail}`)
@@ -160,6 +161,18 @@
 		})
 
 		const createMessageHTML = (message, date) => {
+			period = ""
+			arr = (date.split(" "))
+			time = arr[1].split(":")
+			if (parseInt(time[0]) > 12){
+				time[0] = parseInt(time[0]) - 12
+				period = "PM"
+			}
+			else{
+				period = "AM"
+			}
+			finalTime =  "" + arr[0] +" / "+ time[0] +":" + time[1]+ " " + period
+			//console.log(finalTime)
 			fetch(myProfileUrl).then((response) => {
 				if (response.status == 404) {
 					myProfileUrl = '../file/pictures/default.jpeg'
@@ -170,7 +183,7 @@
 				  <img src=${myProfileUrl} alt="Avatar" align="right">
 				</span>
 				  <p class="msg">${message}</p>
-				  <p class="date">${date}</p>
+				  <p class="date">${finalTime}</p>
 				</div>
 			`
 			})
