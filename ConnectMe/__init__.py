@@ -53,21 +53,21 @@ def convertList(lst):
 
 @app.route("/")
 def root():
-    if user in session:
-        userId = database.getuserid(user)[0]
+    if 'username' in session:
+        userId = database.getuserid(session['username'])[0]
         print('USERID: ' + str(userId))
-        return render_template('swipe.html', crtprof = False, logged_in = True, username = user, id = userId)
+        return render_template('swipe.html', crtprof = False, logged_in = True, username = session['username'], id = userId)
     return render_template('index.html', crtprof = False, logged_in = False)
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
-    if user in session:
+    if 'username' in session:
         return redirect(url_for('root'))
     return render_template('createprofile.html', crtprof = True, logged_in=False)
 
 @app.route('/questions', methods=["POST"])
 def questions():
-    if user in session:
+    if 'username' in session:
         return redirect(url_for('root'))
     database.newuser(request.form["name"], request.form["email"], request.form["pswd"])
     setUser(request.form["email"])
@@ -75,7 +75,7 @@ def questions():
 
 @app.route('/finalizeprofile', methods=["POST"])
 def finalizeprofile():
-    if user in session:
+    if 'username' in session:
         return redirect(url_for('root'))
     file = request.files['profile']
     if file:
@@ -93,14 +93,14 @@ def authenticate():
     '''
     Checks user and pass. Makes login and register work. Checks session.
     '''
-    if user in session:
+    if 'username' in session:
         return redirect(url_for('root'))
     # instantiates DB_Manager with path to DB_FILE
     username, password, curr_page = request.form['username'], request.form['password'], request.form['address']
     # LOGGING IN
     if request.form["submit"] == "Login":
         if username != "" and password != "" and database.loginuser(username, password):
-            session['user'] = username
+            session['username'] = username
             session[username] = password
             setUser(username)
             return redirect(curr_page)
@@ -125,7 +125,8 @@ def authenticate():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    session.pop(user)
+    session.pop('username')
+    #session.pop(username)
     return redirect(url_for("root"))
 
 @app.route('/file/<path:path>')
@@ -161,20 +162,20 @@ messagesArr = []
 users = {}
 @app.route("/messages")
 def messages():
-    if user in session:
-        userId = database.getuserid(user)[0]
-        return render_template('messagesList.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId)
+    if 'username' in session:
+        userId = database.getuserid(session['username'])[0]
+        return render_template('messagesList.html', crtprof = False, logged_in = True, username = session['username'], deets=database.getuser(session['username']), id=userId)
     return redirect(url_for("root"))
 
 @app.route("/message/<id>")
 def messageOne(id):
-    if user in session:
+    if 'username' in session:
         cryptoNum = random.randint(1,100000)
-        userId = database.getuserid(user)[0]
+        userId = database.getuserid(session['username'])[0]
         friend = database.getuserbyid(id)
         print(friend)
-        users[cryptoNum] = session['user']
-        return render_template('message.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId, convouser = friend[1] ,convoNum=id, myEmail=user, convoEmail=database.getuserbyid(int(id))[2])
+        users[cryptoNum] = session['username']
+        return render_template('message.html', num=cryptoNum, crtprof = False, logged_in = True, username = session['username'], deets=database.getuser(session['username']), id=userId, convouser = friend[1] ,convoNum=id, myEmail=session['username'], convoEmail=database.getuserbyid(int(id))[2])
     return redirect(url_for("root"))
 
 @app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
@@ -188,32 +189,32 @@ def message(num, message, time):
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    if user in session:
-        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
+    if 'username' in session:
+        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(session['username']))
     return redirect(url_for('root'))
 
 @app.route('/editprofile', methods=['POST'])
 def editprof():
-    if user in session:
+    if 'username' in session:
         file = request.files['profile']
         if file:
             filename = secure_filename(file.filename)
-            filename = user.replace('.', '-').replace('@', '-') + '.jpeg'
+            filename = session['username'].replace('.', '-').replace('@', '-') + '.jpeg'
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         str = ""
         for i in request.form.getlist("interests"):
             str += i + ","
-        database.fillqs(user, request.form["bio"], request.form["pos"], request.form["major"], str[:-1])
-        database.edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], str[:-1], request.form["bio"], user)
-        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
+        database.fillqs(session['username'], request.form["bio"], request.form["pos"], request.form["major"], str[:-1])
+        database.edituser(request.form["name"], request.form["email"], request.form["pos"], request.form["major"], str[:-1], request.form["bio"], session['username'])
+        return render_template('profile.html', crtprof = False, logged_in = True, username = session['username'], deets=database.getuser(session['username']))
     return redirect(url_for('root'))
 
 @app.route('/changepass', methods=['POST'])
 def changepass():
-    if user in session:
-        if request.form['opswd'] == database.getpassword(user):
-            database.resetpassword(user, request.form['pswd'])
-        return render_template('profile.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user))
+    if 'username' in session:
+        if request.form['opswd'] == database.getpassword(session['username']):
+            database.resetpassword(session['username'], request.form['pswd'])
+        return render_template('profile.html', crtprof = False, logged_in = True, username = session['username'], deets=database.getuser(session['username']))
     return redirect(url_for('root'))
 
 @app.route('/api/getMessages', methods=['GET'])
