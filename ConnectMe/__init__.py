@@ -161,13 +161,13 @@ messagesArr = []
 users = {}
 @app.route("/messages")
 def messages():
-    if 'user' in session:
+    if user in session:
         userId = database.getuserid(user)[0]
         return render_template('messagesList.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId)
 
 @app.route("/message/<id>")
 def messageOne(id):
-    if 'user' in session:
+    if user in session:
         cryptoNum = random.randint(1,100000)
         userId = database.getuserid(user)[0]
         friend = database.getuserbyid(id)
