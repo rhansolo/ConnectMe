@@ -140,6 +140,14 @@ nahianS -- 2019-06-05 15:23
 --------------------------------------------------------------
 Website now displays "its a match" if two users have swiped right on each other
 ==============================================================
+robinH -- 2019-06-07 00:10
+--------------------------------------------------------------
+Observed team GPStuy's repo. Here are my observations:
+- Team's css is very neat and clean
+- Very intuitive to use. Easy to navigate their website.
+- Map displayed is a little confusing + shortest path isn't displayed
+- Apache DB doesn't work
+==============================================================
 nahianS -- 2019-06-07 10:02
 --------------------------------------------------------------
 When "its a match" is displayed, two additional buttons are displayed, one of them directly
