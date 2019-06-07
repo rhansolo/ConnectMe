@@ -164,7 +164,7 @@ def messages():
     if user in session:
         userId = database.getuserid(user)[0]
         return render_template('messagesList.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId)
-    return render_template('messagesList.html', crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId)
+    return redirect(url_for("root"))
 
 @app.route("/message/<id>")
 def messageOne(id):
@@ -175,7 +175,7 @@ def messageOne(id):
         print(friend)
         users[cryptoNum] = session['user']
         return render_template('message.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId, convouser = friend[1] ,convoNum=id, myEmail=user, convoEmail=database.getuserbyid(int(id))[2])
-    return render_template('message.html', num=cryptoNum, crtprof = False, logged_in = True, username = user, deets=database.getuser(user), id=userId, convouser = friend[1] ,convoNum=id, myEmail=user, convoEmail=database.getuserbyid(int(id))[2])
+    return redirect(url_for("root"))
 
 @app.route('/api/message/<num>/<message>/<time>',  methods=['GET'])
 def message(num, message, time):
