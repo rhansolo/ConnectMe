@@ -164,7 +164,7 @@ users = {}
 def messages():
     if 'username' in session:
         userId = database.getuserid(session['username'])[0]
-        return render_template('messagesList.html', crtprof = False, logged_in = True, username = session['username'], deets=database.getuser(session['username']), id=userId)
+        return render_template('messagesList.html', crtprof = False, logged_in = True, username = session['username'], deets=database.getuser(session['username']), id=userId, myEmail=session['username'])
     return redirect(url_for("root"))
 
 @app.route("/message/<id>")

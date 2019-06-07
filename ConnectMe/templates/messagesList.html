@@ -62,12 +62,13 @@
 	</div>
 <script>
 	const myId = {{id}}
+  const myEmail = '{{myEmail}}'
 </script>
 <script>
 const messageList = document.getElementById('list')
-  const createMessageCard = async (name, lastMessage, email, num) => {
+  const createMessageCard = async (name, lastMessage, email, num, time) => {
     let imageUrl = "./file/pictures/default.jpeg"
-    fetch(`./file/pictures/${email.replace('@', '-').replace('.', '-')}.jpeg`)
+    await fetch(`./file/pictures/${email.replace('@', '-').replace('.', '-')}.jpeg`)
     .then((response) => {
       console.log('here')
       if (response.status !== 404) {
@@ -83,6 +84,7 @@ const messageList = document.getElementById('list')
                   <img class="profilePictures" src="${imageUrl}" width="50px">
                   <span class="name"><b>${name}</b> (${email})</span>
                   <span class="lastMessage">${lastMessage}</span>
+                  <span class="lastMessage">${time}</span>
                 </div>
             </div>
             </a>`
@@ -101,10 +103,30 @@ fetch(`./getMessages/${myId}`)
         messageList.innerHTML += '<p id="sorry"><i>Sorry you do not have any matches at this time</i></p>'
     }
   	myJson.forEach( async (person) => {
-  		createMessageCard(person[0], person[3][3], person[1], person[2])
+      console.log(person)
+      let message = person[3][3]
+      if (person[3][1] == myEmail) {
+        message = '<b>You:</b> ' + message
+      }
+  		await createMessageCard(person[0], message, person[1], person[2], convertTime(person[3][4]))
   	})
   })
 
+
+const convertTime = (date) => {
+  let period = ""
+  let arr = (date.split(" "))
+  let time = arr[1].split(":")
+  if (parseInt(time[0]) > 12){
+    time[0] = parseInt(time[0]) - 12
+    period = "PM"
+  }
+  else{
+    period = "AM"
+  }
+  let finalTime =  "" + arr[0] +" / "+ time[0] +":" + time[1]+ " " + period
+  return finalTime
+}
 
 </script>
 </body>

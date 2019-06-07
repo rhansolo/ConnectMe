@@ -82,6 +82,26 @@
 		let myProfileUrl = `../file/pictures/${myEmail.replace('@', '-').replace('.', '-')}.jpeg`
 		let convoProfileUrl = `../file/pictures/${convoEmail.replace('@', '-').replace('.', '-')}.jpeg`
 
+
+		const init = async () => {
+			await fetch(myProfileUrl).then((response) => {
+				if (response.status == 404) {
+					myProfileUrl = '../file/pictures/default.jpeg'
+				}
+			}
+			)
+
+			await fetch(convoProfileUrl).then((response) => {		
+				if (response.status == 404) {
+					convoProfileUrl = '../file/pictures/default.jpeg'
+				}
+			}
+			)
+		}
+
+		init()
+	
+
 		const sendButton = document.getElementById('sendButton')
 		// const num = document.getElementById('num').innerHTML
 		console.log(num)
@@ -96,7 +116,7 @@
 		  .then(function(response) {
 		    return response.json();
 		  })
-		  .then(function(myJson) {
+		  .then( (myJson) => {
 		  	myJson = myJson.sort((a, b) => {
 		  		if (a[0] < b[0]) {
 		  			return -1
@@ -105,11 +125,11 @@
 		  		}
 		  	})
 		  	console.log(myJson)
-		  	myJson.forEach(message => {
+		  	myJson.forEach((message) => {
 		  		if (message[1] == myEmail) {
-		  			createMessageHTML(message[3], message[4].split('.')[0])
+		  		 	createMessageHTML(message[3], message[4].split('.')[0])
 		  		} else {
-		  			friendMessage(message[3], message[4].split('.')[0])
+		  			 friendMessage(message[3], message[4].split('.')[0])
 		  		}
 		  	})
 			setTimeout(updateScroll, 500)
@@ -161,9 +181,9 @@
 		})
 
 		const createMessageHTML = (message, date) => {
-			period = ""
-			arr = (date.split(" "))
-			time = arr[1].split(":")
+			let period = ""
+			let arr = (date.split(" "))
+			let time = arr[1].split(":")
 			if (parseInt(time[0]) > 12){
 				time[0] = parseInt(time[0]) - 12
 				period = "PM"
@@ -171,12 +191,8 @@
 			else{
 				period = "AM"
 			}
-			finalTime =  "" + arr[0] +" / "+ time[0] +":" + time[1]+ " " + period
+			let finalTime =  "" + arr[0] +" / "+ time[0] +":" + time[1]+ " " + period
 			//console.log(finalTime)
-			fetch(myProfileUrl).then((response) => {
-				if (response.status == 404) {
-					myProfileUrl = '../file/pictures/default.jpeg'
-				}
 				messagesDiv.innerHTML += `
 			<div class="container darker">
 				<span class="fullheight">
@@ -186,14 +202,12 @@
 				  <p class="date">${finalTime}</p>
 				</div>
 			`
-			})
 		}
 
 		const friendMessage = (message, date) => {
-			fetch(convoProfileUrl).then((response) => {
-				period = ""
-				arr = (date.split(" "))
-				time = arr[1].split(":")
+				let period = ""
+				let arr = (date.split(" "))
+				let time = arr[1].split(":")
 				if (parseInt(time[0]) > 12){
 					time[0] = parseInt(time[0]) - 12
 					period = "PM"
@@ -201,10 +215,7 @@
 				else{
 					period = "AM"
 				}
-				finalTime =  "" + arr[0] +" / "+ time[0] +":" + time[1]+ " " + period
-				if (response.status == 404) {
-					convoProfileUrl = '../file/pictures/default.jpeg'
-				}
+				let finalTime =  "" + arr[0] +" / "+ time[0] +":" + time[1]+ " " + period
 				messagesDiv.innerHTML += `<div class="container lighter">
 			<span class="fullheight">
 		  <img src=${convoProfileUrl} alt="Avatar">
@@ -212,7 +223,6 @@
 		  <p>${message}</p>
 		<p class="date">${finalTime}</p>
 		</div>`
-			})
 		}
 
 	function updateScroll(){
