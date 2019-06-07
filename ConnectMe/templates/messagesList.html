@@ -96,6 +96,7 @@ fetch(`./getMessages/${myId}`)
     return response.json();
   })
   .then(async (myJson)  => {
+    myJson = myJson.sort((a,b) => {if (a[3][0] > b[3][0]) {return -1} else {return 1}})
     if (myJson.length == 0) {
         messageList.innerHTML += '<p id="sorry"><i>Sorry you do not have any matches at this time</i></p>'
     }
