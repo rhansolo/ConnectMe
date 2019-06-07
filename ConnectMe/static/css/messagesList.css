@@ -13,6 +13,8 @@ a {
 
 .profilePictures {
 	float: left;
+	border-radius: 50%;
+	width: 80px;
 }
 
 .name {

@@ -217,7 +217,7 @@ document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `<div class=
 
           document.getElementById('cardRoot').insertAdjacentHTML('beforeend', `
          <div class="tinder--card">
-            <div class="thumb">
+            <div class="thumb info">
               <img src="${imageUrl}" style="width:200;height:200;"}>
             </div>
             <h3 class="name interested">${myJson.name}</h3>

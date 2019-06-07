@@ -54,8 +54,8 @@
 			<h2 class="center">Messages</h2>
 			<br>
 		  <div class="row">
-		    <div class="col-sm" id="list">
-		    		
+		    <div class="col-sm" id="list" style="overflow-y: auto; height:600px">
+
 		    </div>
 		  </div>
 			</div>
@@ -81,7 +81,7 @@ const messageList = document.getElementById('list')
                 <div class="card-body">
 
                   <img class="profilePictures" src="${imageUrl}" width="50px">
-                  <span class="name"><b>${name}</b> (${email})</span>                 
+                  <span class="name"><b>${name}</b> (${email})</span>
                   <span class="lastMessage">${lastMessage}</span>
                 </div>
             </div>
@@ -103,7 +103,6 @@ fetch(`./getMessages/${myId}`)
   		createMessageCard(person[0], person[3][3], person[1], person[2])
   	})
   })
-
 
 
 </script>
