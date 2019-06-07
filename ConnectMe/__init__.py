@@ -13,7 +13,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 database.createdb()
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.secret_key = 24
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 user = None
 
 def setUser(userName):
