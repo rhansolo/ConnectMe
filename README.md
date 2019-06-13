@@ -49,7 +49,7 @@ sudo chmod -R 777 static/
 pip3 install -r requirements.txt
 ```
 6. Open the conf file and change the server name to your ip address:
-```nano ConnectMe.conf```
+```nano connectme.conf```
 7. Move the conf file to the sites-available directory:
 ```mv ConnectMe.conf ~/../../etc/apache2/sites-available/```
 8. Move to the sites-available directory
