@@ -1,5 +1,5 @@
 #!/usr/bin/python3
 import sys
-sys.path.insert(0,"/var/www/ConnectMe/")
-sys.path.insert(0,"/var/www/ConnectMe/ConnectMe/")
-from ConnectMe import app as application
+sys.path.insert(0,"/var/www/connectme/")
+sys.path.insert(0,"/var/www/connectme/connectme/")
+from connectme import app as application
